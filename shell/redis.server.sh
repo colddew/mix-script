@@ -1,3 +1,4 @@
+#!/bin/sh
 cd /Users/tools/redis/cluster/7000
 ./redis-server redis.conf
 cd /Users/tools/redis/cluster/7001

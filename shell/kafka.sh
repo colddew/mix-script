@@ -1,3 +1,4 @@
+#!/bin/sh
 # start kafka server cluster
 /Users/tools/kafka/bin/kafka-server-start.sh /Users/tools/kafka/config/server.properties
 /Users/tools/kafka/bin/kafka-server-start.sh /Users/tools/kafka/config/cluster/server-1.properties
