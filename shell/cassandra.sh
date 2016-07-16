@@ -43,11 +43,11 @@ ccm invalidatecache
 ccm create test -v 3.0.7 -n 3 -s
 
 # query cassandra cluster status by ccm
-ccm node1 nodetool status
-ccm list
-ccm status
+ccm node1 status
 ccm node1 ring
 ccm node1 showlog
+ccm list
+ccm status
 ccm flush
 ccm node1 flush
 
