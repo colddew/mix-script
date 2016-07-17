@@ -39,8 +39,12 @@ echo "127.0.0.1 XXX" >> /etc/hosts
 
 # start cassandra cluster by ccm
 # /Users/colddew/.ccm
+# ccm create test -v 2.2.7 -n 3 -s
 ccm invalidatecache
-ccm create test -v 3.0.7 -n 3 -s
+ccm create test --install-dir=<path/to/cassandra-sources>
+ccm populate -n 3
+ccm start
+
 
 # query cassandra cluster status by ccm
 ccm node1 show
