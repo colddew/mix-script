@@ -7,3 +7,7 @@ tree
 
 # format json
 jq
+
+# unicode encode/decode
+native2ascii
+native2ascii -reverse
