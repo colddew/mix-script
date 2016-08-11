@@ -11,3 +11,8 @@ jq
 # unicode encode/decode
 native2ascii
 native2ascii -reverse
+
+# ngrok
+~/Downloads/ngrok http 8888
+# inspect traffic
+http://localhost:4040
