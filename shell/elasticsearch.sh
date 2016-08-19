@@ -16,7 +16,7 @@ Elasticsearch -> Indices   -> Types  -> Documents -> Fields
 
 # install plugin
 # /Users/tools/es-cluster/es-node1/bin/plugin install mobz/elasticsearch-head
-# 127.0.0.1:9201/_plugin/head/
+# http://localhost:9201/_plugin/head/
 
 # /Users/tools/es-cluster/es-node1/bin/plugin install license
 # /Users/tools/es-cluster/es-node1/bin/plugin install marvel-agent
@@ -25,8 +25,13 @@ Elasticsearch -> Indices   -> Types  -> Documents -> Fields
 # /Users/tools/es-cluster/es-node3/bin/plugin install license
 # /Users/tools/es-cluster/es-node3/bin/plugin install marvel-agent
 # /Users/tools/kibana/bin/kibana plugin --install elasticsearch/marvel/2.3.5
-# http://127.0.0.1:5601/app/kibana
-# http://127.0.0.1:5601/app/marvel
+# http://localhost:5601/app/kibana
+# http://localhost:5601/app/marvel
+
+# /Users/tools/es-cluster/es-node1/bin/plugin install elasticsearch/watcher/latest
+# /Users/tools/es-cluster/es-node2/bin/plugin install elasticsearch/watcher/latest
+# /Users/tools/es-cluster/es-node3/bin/plugin install elasticsearch/watcher/latest
+# http://localhost:9201/_watcher/stats?pretty
 
 # useful url
 curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'
