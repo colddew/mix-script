@@ -41,3 +41,6 @@ _count
 _search?q=last_name:Smith
 _cluster/stats
 _nodes/stats/jvm
+
+# logstash
+/Users/tools/logstash/bin/logstash -e 'input { stdin { } } output { stdout {} }'
