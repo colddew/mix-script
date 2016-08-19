@@ -27,3 +27,12 @@ Elasticsearch -> Indices   -> Types  -> Documents -> Fields
 # /Users/tools/kibana/bin/kibana plugin --install elasticsearch/marvel/2.3.5
 # http://127.0.0.1:5601/app/kibana
 # http://127.0.0.1:5601/app/marvel
+
+# useful url
+curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'
+?pretty
+_cluster/health
+_count
+_search?q=last_name:Smith
+_cluster/stats
+_nodes/stats/jvm
