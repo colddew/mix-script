@@ -1,4 +1,8 @@
 #!/bin/sh
+# terminology
+Relational DB -> Databases -> Tables -> Rows -> Columns
+Elasticsearch -> Indices   -> Types  -> Documents -> Fields
+
 # start elasticsearch
 /Users/tools/es-cluster/es-node1/bin/elasticsearch -d
 /Users/tools/es-cluster/es-node2/bin/elasticsearch -d
@@ -16,6 +20,10 @@
 
 # /Users/tools/es-cluster/es-node1/bin/plugin install license
 # /Users/tools/es-cluster/es-node1/bin/plugin install marvel-agent
-# /Users/tools/kibana/bin/kibana plugin --install elasticsearch/marvel/latest
+# /Users/tools/es-cluster/es-node2/bin/plugin install license
+# /Users/tools/es-cluster/es-node2/bin/plugin install marvel-agent
+# /Users/tools/es-cluster/es-node3/bin/plugin install license
+# /Users/tools/es-cluster/es-node3/bin/plugin install marvel-agent
+# /Users/tools/kibana/bin/kibana plugin --install elasticsearch/marvel/2.3.5
 # http://127.0.0.1:5601/app/kibana
 # http://127.0.0.1:5601/app/marvel
