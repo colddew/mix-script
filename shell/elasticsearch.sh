@@ -9,7 +9,7 @@ Elasticsearch -> Indices   -> Types  -> Documents -> Fields
 /Users/tools/es-cluster/es-node3/bin/elasticsearch -d
 
 # start kibana
-# /Users/tools/kibana/bin/kibana
+/Users/tools/kibana/bin/kibana
 
 # shutdown
 # ps aux | grep elasticsearch | grep -v grep | awk '{print $2}' | xargs kill -9
@@ -44,3 +44,5 @@ _nodes/stats/jvm
 
 # logstash
 /Users/tools/logstash/bin/logstash -e 'input { stdin { } } output { stdout {} }'
+
+/Users/tools/logstash/bin/logstash -f /Users/tools/logstash/config/logstash.conf --configtest
