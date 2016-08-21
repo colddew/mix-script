@@ -43,6 +43,7 @@ _cluster/stats
 _nodes/stats/jvm
 
 # logstash
+# event processing pipeline has three stages: inputs → filters → outputs
+# inputs generate events, filters modify them, and outputs ship them elsewhere
 /Users/tools/logstash/bin/logstash -e 'input { stdin { } } output { stdout {} }'
-
-/Users/tools/logstash/bin/logstash -f /Users/tools/logstash/config/logstash.conf --configtest
+/Users/tools/logstash/bin/logstash -f /Users/script/shell/logstash.conf --configtest
