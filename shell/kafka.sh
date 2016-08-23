@@ -21,3 +21,6 @@
 
 # describe broker
 /Users/tools/kafka/bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic microservice-cluster
+
+# query consumer stastics by given group and topic
+/Users/tools/kafka/bin/kafka-run-class.sh kafka.tools.ConsumerOffsetChecker --group microservice-group --topic microservice-topic --zookeeper localhost:2181
