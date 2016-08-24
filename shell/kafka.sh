@@ -16,7 +16,7 @@
 # send message
 /Users/tools/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic microservice-cluster
 
-# receive message
+# consume message
 /Users/tools/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic microservice-cluster --from-beginning
 
 # describe broker
@@ -24,3 +24,7 @@
 
 # query consumer stastics by given group and topic
 /Users/tools/kafka/bin/kafka-run-class.sh kafka.tools.ConsumerOffsetChecker --group microservice-group --topic microservice-topic --zookeeper localhost:2181
+
+# group operation
+/Users/tools/kafka/bin/kafka-consumer-groups.sh --describe --group microservice-group --zookeeper localhost:2181
+/Users/tools/kafka/bin/kafka-consumer-groups.sh --list --zookeeper localhost:2181

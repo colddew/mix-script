@@ -45,7 +45,6 @@ ccm create test --install-dir=<path/to/cassandra-sources>
 ccm populate -n 3
 ccm start
 
-
 # query cassandra cluster status by ccm
 ccm node1 show
 ccm node1 status
