@@ -16,3 +16,6 @@ native2ascii -reverse
 ~/Downloads/ngrok http 8888
 # inspect traffic
 http://localhost:4040
+
+# dns
+dig @<dns-server-ip> +trace
