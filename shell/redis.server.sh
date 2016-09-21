@@ -1,4 +1,5 @@
 #!/bin/sh
+# start cluster
 cd /Users/tools/redis/cluster/7000
 ./redis-server redis.conf
 cd /Users/tools/redis/cluster/7001
@@ -11,3 +12,6 @@ cd /Users/tools/redis/cluster/7004
 ./redis-server redis.conf
 cd /Users/tools/redis/cluster/7005
 ./redis-server redis.conf
+
+# kill cluster
+# ps aux | grep redis | grep -v grep | awk '{print $2}' | xargs kill -9
