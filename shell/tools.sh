@@ -19,3 +19,6 @@ http://localhost:4040
 
 # dns
 dig @<dns-server-ip> +trace
+
+# list jar dependency
+mvn dependency:tree -Dincludes=`<groupId>`:`<artifactId>`
