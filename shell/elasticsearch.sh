@@ -8,11 +8,11 @@ Elasticsearch -> Indices   -> Types  -> Documents -> Fields
 /Users/tools/es-cluster/es-node2/bin/elasticsearch -d
 /Users/tools/es-cluster/es-node3/bin/elasticsearch -d
 
+# shutdown elasticsearch
+# ps aux | grep elasticsearch | grep -v grep | awk '{print $2}' | xargs kill -9
+
 # start kibana
 /Users/tools/kibana/bin/kibana
-
-# shutdown
-# ps aux | grep elasticsearch | grep -v grep | awk '{print $2}' | xargs kill -9
 
 # install plugin
 # /Users/tools/es-cluster/es-node1/bin/plugin install mobz/elasticsearch-head
@@ -46,4 +46,5 @@ _nodes/stats/jvm
 # event processing pipeline has three stages: inputs → filters → outputs
 # inputs generate events, filters modify them, and outputs ship them elsewhere
 /Users/tools/logstash/bin/logstash -e 'input { stdin { } } output { stdout {} }'
-/Users/tools/logstash/bin/logstash agent -f /Users/script/shell/logstash.conf --configtest
+/Users/tools/logstash/bin/logstash -e 'input{stdin{}}output{stdout{codec=>rubydebug}}'
+/Users/tools/logstash/bin/logstash agent -f /Users/tools/logstash/config/logstash.conf --configtest
