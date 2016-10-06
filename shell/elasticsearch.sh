@@ -12,7 +12,7 @@ Elasticsearch -> Indices   -> Types  -> Documents -> Fields
 # ps aux | grep elasticsearch | grep -v grep | awk '{print $2}' | xargs kill -9
 
 # start kibana
-/Users/tools/kibana/bin/kibana
+nohup /Users/tools/kibana/bin/kibana &
 
 # install plugin
 # /Users/tools/es-cluster/es-node1/bin/plugin install mobz/elasticsearch-head
@@ -32,6 +32,9 @@ Elasticsearch -> Indices   -> Types  -> Documents -> Fields
 # /Users/tools/es-cluster/es-node2/bin/plugin install elasticsearch/watcher/latest
 # /Users/tools/es-cluster/es-node3/bin/plugin install elasticsearch/watcher/latest
 # http://localhost:9201/_watcher/stats?pretty
+
+# /Users/tools/es-cluster/es-node1/bin/plugin install lmenezes/elasticsearch-kopf
+# http://localhost:9201/_plugin/kopf
 
 # useful url
 curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'
