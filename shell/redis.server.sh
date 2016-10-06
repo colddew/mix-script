@@ -15,3 +15,6 @@ cd /Users/tools/redis/cluster/7005
 
 # kill cluster
 # ps aux | grep redis | grep -v grep | awk '{print $2}' | xargs kill -9
+
+# start stand-alone in 6379 port
+# nohup /Users/tools/redis/src/redis-server &

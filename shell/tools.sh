@@ -23,3 +23,6 @@ dig @<dns-server-ip> +trace
 # maven
 # list jar dependency
 mvn dependency:tree -Dincludes=<groupId>:<artifactId>
+
+# ops
+lsof -i tcp:port

@@ -48,3 +48,5 @@ _nodes/stats/jvm
 /Users/tools/logstash/bin/logstash -e 'input { stdin { } } output { stdout {} }'
 /Users/tools/logstash/bin/logstash -e 'input{stdin{}}output{stdout{codec=>rubydebug}}'
 /Users/tools/logstash/bin/logstash agent -f /Users/tools/logstash/config/logstash.conf --configtest
+/Users/tools/logstash/bin/logstash agent -f /Users/tools/logstash/config/logstash_agent.conf --configtest
+/Users/tools/logstash/bin/logstash agent -f /Users/tools/logstash/config/logstash_indexer.conf --configtest
