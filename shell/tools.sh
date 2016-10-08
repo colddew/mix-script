@@ -20,12 +20,15 @@ http://localhost:4040
 # dns
 dig @<dns-server-ip> +trace
 
+# stress test
+ab -n 1000 -c 100 [-H "<header>"] <url>
+
 # maven
 # list jar dependency
 mvn dependency:tree -Dincludes=<groupId>:<artifactId>
 
 # common used
-chown -R colddew:admin <path>
+chown -R colddew[:admin] <path>
 chgrp -R admin <path>
 lsof -i tcp:port
 ulimit -a
