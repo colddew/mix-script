@@ -24,5 +24,8 @@ dig @<dns-server-ip> +trace
 # list jar dependency
 mvn dependency:tree -Dincludes=<groupId>:<artifactId>
 
-# ops
+# common used
+chown -R colddew:admin <path>
+chgrp -R admin <path>
 lsof -i tcp:port
+ulimit -a
