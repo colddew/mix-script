@@ -21,7 +21,7 @@ http://localhost:4040
 dig @<dns-server-ip> +trace
 
 # stress test
-ab -n 1000 -c 100 [-H "<header>"] <url>
+ab -n 1000 -c 100 -v 2 [-H "<header>"] <url>
 
 # maven
 # list jar dependency
