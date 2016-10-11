@@ -33,7 +33,5 @@ chgrp -R admin <path>
 lsof -i tcp:port
 ulimit -a
 find / -name <file-name>
-whereis <file-name>
-which <file-name>
 tar -zcvf <zip-file-name>.tar.gz <zip-path>
 tar -zxvf <zip-file-name>.tar.gz
