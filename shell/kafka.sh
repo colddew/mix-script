@@ -1,8 +1,8 @@
 #!/bin/sh
 # start kafka server cluster
-/Users/tools/kafka/bin/kafka-server-start.sh /Users/tools/kafka/config/server.properties
-/Users/tools/kafka/bin/kafka-server-start.sh /Users/tools/kafka/config/cluster/server-1.properties
-/Users/tools/kafka/bin/kafka-server-start.sh /Users/tools/kafka/config/cluster/server-2.properties
+/Users/tools/kafka/bin/kafka-server-start.sh /Users/tools/kafka/config/server.properties &
+/Users/tools/kafka/bin/kafka-server-start.sh /Users/tools/kafka/config/cluster/server-1.properties &
+/Users/tools/kafka/bin/kafka-server-start.sh /Users/tools/kafka/config/cluster/server-2.properties &
 
 # create topic
 /Users/tools/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic microservice-cluster
