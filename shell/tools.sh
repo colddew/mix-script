@@ -27,6 +27,9 @@ ab -n 1000 -c 100 -v 2 [-H "<header>"] <url>
 # list jar dependency
 mvn dependency:tree -Dincludes=<groupId>:<artifactId>
 
+# calculate gzip compression ratio
+gzip -cv <file-name> > /dev/null
+
 # common used
 chown -R colddew[:admin] <path>
 chgrp -R admin <path>
