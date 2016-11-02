@@ -51,3 +51,4 @@ tar -zcvf <zip-file-name>.tar.gz <zip-path>
 tar -zxvf <zip-file-name>.tar.gz
 df -h
 grep [-ivnc] '<search-content>' <file-name>
+sort [-ntkr] <file-name>
