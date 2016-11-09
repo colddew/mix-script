@@ -52,10 +52,3 @@ tar -zxvf <zip-file-name>.tar.gz
 df -h
 grep [-ivnc] '<search-content>' <file-name>
 sort [-ntkr] <file-name>
-
-# batch
-for i in `cat ids.txt`
-do
-  echo id is $i
-  curl -X GET --header "Accept: */*" --header "Authorization: XXX" "http://localhost:8080/api/$i/rebuild"
-done
