@@ -1,10 +1,19 @@
 #!/bin/sh
-# start local cassandra
+# start local cassandra in the foreground/background
 # /Users/tools/cassandra/bin/cassandra -f
 /Users/tools/cassandra/bin/cassandra
 
-# query cassandra cluster status
+# query cassandra status
 /Users/tools/cassandra/bin/nodetool status
+
+# cqlsh
+cqlsh localhost
+# SELECT cluster_name, listen_address FROM system.local;
+
+# kill cassandra
+pgrep -f CassandraDaemon
+kill pid
+# pkill -f CassandraDaemon
 
 # kill cassandra cluster
 ps aux | grep cassandra | grep -v grep | awk '{print $2}' | xargs kill -9
@@ -46,6 +55,7 @@ ccm invalidatecache
 ccm create test -v 2.2.8
 ccm populate -n 3
 ccm start
+ccm stop
 
 # query cassandra cluster status by ccm
 ccm node1 show
@@ -56,7 +66,6 @@ ccm list
 ccm status
 ccm flush
 ccm node1 flush
-ccm node1 cqlsh
 
 # add node to cassandra cluster
 ccm add node4 -i 127.0.0.4 -j 7400 -b
@@ -67,3 +76,6 @@ ccm node1 flush
 
 # remove cassandra cluster
 ccm remove
+
+# ccm cqlsh
+ccm node1 cqlsh
