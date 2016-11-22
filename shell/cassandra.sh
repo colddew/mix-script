@@ -24,13 +24,14 @@ sudo pip install psutil
 # config multiple loopback aliases
 sudo ifconfig lo0 alias 127.0.0.2 up
 sudo ifconfig lo0 alias 127.0.0.3 up
+ifconfig lo0
 
 # install ccm
 sudo pip install ccm
 
 # config HostName and ComputerName
 scutil --get HostName
-sutil --get ComputerName
+scutil --get ComputerName
 scutil --set ComputerName XXX
 scutil --set HostName XXX
 
@@ -39,9 +40,10 @@ echo "127.0.0.1 XXX" >> /etc/hosts
 
 # start cassandra cluster by ccm
 # /Users/colddew/.ccm
-# ccm create test -v 2.2.7 -n 3 -s
+# ccm create test -v 2.2.8 -n 3 -s
+# ccm create test --install-dir=<path/to/cassandra-sources>
 ccm invalidatecache
-ccm create test --install-dir=<path/to/cassandra-sources>
+ccm create test -v 2.2.8
 ccm populate -n 3
 ccm start
 
@@ -54,6 +56,7 @@ ccm list
 ccm status
 ccm flush
 ccm node1 flush
+ccm node1 cqlsh
 
 # add node to cassandra cluster
 ccm add node4 -i 127.0.0.4 -j 7400 -b
