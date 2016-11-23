@@ -41,14 +41,31 @@ umount <partition-device>
 fsck -t ext3 <partition-device>
 badblocks -v <partition-device>
 
+# monitor
+lsof -i tcp:port
+dstat 5
+dstat --top-mem --top-io --top-cpu
+mtr
+
+# tuning
+jps
+jstat -gcutil <pid> [cycle]
+jmap -heap <pid>
+jmap -histo:live <pid>
+jmap -dump:file=<dump-file>,format=b <pid>
+jstack -l <pid>
+jstack -m <pid>
+jstack -F <pid>
+
 # common used
 chown -R colddew[:admin] <path>
 chgrp -R admin <path>
-lsof -i tcp:port
 ulimit -a
 find / -name <file-name>
 tar -zcvf <zip-file-name>.tar.gz <zip-path>
 tar -zxvf <zip-file-name>.tar.gz
 df -h
+du -h .
 grep [-ivnc] '<search-content>' <file-name>
 sort [-ntkr] <file-name>
+diff -r <first-file> <second-file> | diffstat
