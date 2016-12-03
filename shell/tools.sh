@@ -56,6 +56,7 @@ jmap -dump:file=<dump-file>,format=b <pid>
 jstack -l <pid>
 jstack -m <pid>
 jstack -F <pid>
+jcmd
 
 # common used
 chown -R colddew[:admin] <path>
