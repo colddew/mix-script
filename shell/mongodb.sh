@@ -13,3 +13,13 @@ mongoexport --host=127.0.0.1 --port=27017 -d db -c collection -o out.txt -q '{cr
 
 # sync
 mongosync -h 127.0.0.1:27017 --to 127.0.0.1:27018 -d contact -c contactInfos --oplog
+
+# command
+mongo --host <mongo-host> --port <mongo-port>
+show dbs
+use <db>
+show collections
+db.<collection>.count()
+db.<collection>.find({})
+db.currentOP()
+db.version()
