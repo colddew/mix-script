@@ -2,13 +2,24 @@
 # start local cassandra in the foreground/background
 # /Users/tools/cassandra/bin/cassandra -f
 /Users/tools/cassandra/bin/cassandra
+/Users/tools/cassandra/bin/cassandra -v
 
 # query cassandra status
 /Users/tools/cassandra/bin/nodetool status
 
 # cqlsh
-cqlsh localhost
+cqlsh localhost port [-u username -p password]
 # SELECT cluster_name, listen_address FROM system.local;
+# desc keyspaces;
+# CREATE KEYSPACE IF NOT EXISTS mykeyspace WITH replication = {'class' : 'SimpleStrategy','replication_factor' : 3};
+# use mykeyspace;
+# CREATE CUSTOM INDEX IF NOT EXISTS IDX_LASTNAME ON customers (lastName);
+# CREATE TABLE customers (customerId uuid PRIMARY KEY, firstName text, lastName text);
+# desc mykeyspace.customers;
+# INSERT INTO customers (customerId,  firstName, lastName) VALUES (5127697b-1c12-4e0e-a70a-a23c1be65781, 'john', 'smith');
+# SELECT cluster_name, listen_address FROM system.local;
+# DROP TABLE IF EXISTS keyspace_name.table_name;
+# DROP INDEX IF EXISTS keyspace.index_name
 
 # kill cassandra
 pgrep -f CassandraDaemon
