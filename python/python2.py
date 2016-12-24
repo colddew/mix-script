@@ -6,6 +6,8 @@
 # sudo pip install MySQL-python
 # sudo install_name_tool -change libmysqlclient.18.dylib /usr/local/mysql/lib/libmysqlclient.18.dylib /Library/Python/2.7/site-packages/_mysql.so
 # sudo pip install requests
+# sudo pip install threadpool
+# sudo pip install apscheduler
 
 # command
 python -V
