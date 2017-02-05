@@ -2,14 +2,14 @@
 # install neo4j
 /Users/tools/neo4j/bin/neo4j console
 
-# start neo4j and browse http://localhost:7474/
+# start neo4j and browse http://127.0.0.1:7474/
 /Users/tools/neo4j/bin/neo4j start
 :server connect
 :help
 :history
 
 # Cypher Pattern
-# (n)-[:r]→()
+# (n)-[r:TYPE1|TYPE2]→()
 # (variable:Label)-[variable:Label{propertiesKey:propertiesValue}]->(variable:Label)
 
 # example

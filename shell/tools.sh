@@ -69,4 +69,5 @@ df -h
 du -h .
 grep [-ivnc] '<search-content>' <file-name>
 sort [-ntkr] <file-name>
+# cat uniq.txt | sort | uniq
 diff -r <first-file> <second-file> | diffstat
