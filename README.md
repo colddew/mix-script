@@ -1,2 +1,2 @@
 # mix-script
-all kinds of useful script
+script forge
