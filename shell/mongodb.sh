@@ -1,6 +1,7 @@
 #!/bin/sh
 # single mongo
-/usr/local/bin/mongod -config /usr/local/etc/mongod.conf
+# /usr/local/bin/mongod -config /usr/local/etc/mongod.conf
+/usr/local/mongodb/bin/mongod --dbpath /usr/local/mongodb/data
 
 # mongo cluster
 

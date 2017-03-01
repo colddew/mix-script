@@ -1,6 +1,6 @@
 #!/bin/sh
-#/usr/local/nginx/sbin/nginx -t
-#/usr/local/nginx/sbin/nginx -s stop
-#/usr/local/nginx/sbin/nginx -s reload
+#/usr/local/bin/nginx -t
+#/usr/local/bin/nginx -s stop
+#/usr/local/bin/nginx -s reload
 
-/usr/local/nginx/sbin/nginx
+/usr/local/bin/nginx
