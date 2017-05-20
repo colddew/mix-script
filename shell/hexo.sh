@@ -10,7 +10,10 @@ npm install hexo-deployer-git --save
 hexo d[eploy]
 # hexo g -d
 
+hexo new draft "New Draft"
+hexo publish "New Draft" --draft
+
 # clean cache files (db.json) and static files (public) 
-hexo clean
-rm -rf .deploy_git
-hexo list
+# hexo clean
+# rm -rf .deploy_git
+# hexo list
