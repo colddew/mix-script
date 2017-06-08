@@ -2,6 +2,9 @@
 iconv -l
 iconv -f gb2312 -t utf-8
 
+# test nginx gzip compress
+curl -I -H "Accept-Encoding: gzip, deflate" "https://www.plantlink.cn"
+
 # format directory
 tree
 
@@ -71,3 +74,6 @@ grep [-ivnc] '<search-content>' <file-name>
 sort [-ntkr] <file-name>
 # cat uniq.txt | sort | uniq
 diff -r <first-file> <second-file> | diffstat
+
+# count file quantity
+ls -l | grep "^-" | wc -l
