@@ -22,3 +22,6 @@ SHOW VARIABLES WHERE Variable_name LIKE 'character\_set\_%' OR Variable_name LIK
 ALTER DATABASE succulent CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 ALTER TABLE T_Succulent_User CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE T_Succulent_User CHANGE NickName NickName varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci COMMENT 'XXX';
+
+# mycli
+mycli <database-name>
