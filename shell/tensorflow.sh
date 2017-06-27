@@ -36,7 +36,7 @@ tensorboard --logdir /tmp/retrain_logs
 # http://localhost:6006
 bazel build tensorflow/examples/image_retraining:retrain
 bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/flower_photos
-bazel-bin/tensorflow/examples/label_image/label_image --image=$HOME/Downloads/flower_photos/daisy/21652746_cc379e0eea_m.jpg
+# bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/flower_photos --random_crop 5 --random_scale 5 --random_brightness 5
 
 bazel build tensorflow/examples/label_image:label_image && \
 bazel-bin/tensorflow/examples/label_image/label_image \

@@ -15,7 +15,7 @@ crontab -e
 crontab -l
 crontab -r
 
-# batch
+# batch execute script
 for i in `cat ids.txt`
 do
   echo id is $i

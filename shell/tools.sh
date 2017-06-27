@@ -5,6 +5,10 @@ iconv -f gb2312 -t utf-8
 # test nginx gzip compress
 curl -I -H "Accept-Encoding: gzip, deflate" "https://www.plantlink.cn"
 
+# upload image to baidu
+curl -i -F 'image=@3.jpg' 'http://image.baidu.com/pictureup/uploadshitu?pos=upload&uptype=upload_pc&fm=index'
+curl -i -F 'image=@3.jpg' 'http://image.baidu.com/pictureup/uploadshitu?pos=upload&uptype=upload_pc&fm=index' -L
+
 # format directory
 tree
 
