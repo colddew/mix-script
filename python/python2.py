@@ -12,6 +12,9 @@
 # command
 python -V
 
+import sys, pprint
+pprint.pprint(sys.path)
+
 # script
 for letter in 'Python':
    print 'current letter:', letter
