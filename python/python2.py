@@ -15,6 +15,11 @@ python -V
 import sys, pprint
 pprint.pprint(sys.path)
 
+dir(copy)
+help(copy.copy)
+print copy.__doc__
+print copy.__file__
+
 # script
 for letter in 'Python':
    print 'current letter:', letter
