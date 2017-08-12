@@ -20,6 +20,9 @@ help(copy.copy)
 print copy.__doc__
 print copy.__file__
 
+import webbrowser
+webbrowser.open("http://www.baidu.com")
+
 # script
 for letter in 'Python':
    print 'current letter:', letter
