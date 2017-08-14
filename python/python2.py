@@ -33,3 +33,17 @@ for index in range(len(fruits)):
 
 with open("/tmp/file.txt") as file:
     do(file)
+
+f = open(filename)
+for line in f.readlines():
+    process(line)
+f.close()
+
+import fileinput
+for line in fileinput.input(line):
+    process(line)
+
+f = open(filename)
+for line in f:
+    process(line)
+f.close()
