@@ -25,8 +25,11 @@ webbrowser.open("http://www.baidu.com")
 
 # script
 for letter in 'Python':
-   print 'current letter:', letter
+    print 'current letter:', letter
 
 fruits = ['banana', 'apple',  'mango']
 for index in range(len(fruits)):
-   print 'current fruit:', fruits[index]
+    print 'current fruit:', fruits[index]
+
+with open("/tmp/file.txt") as file:
+    do(file)
