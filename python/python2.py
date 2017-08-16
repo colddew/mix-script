@@ -23,6 +23,11 @@ print copy.__file__
 import webbrowser
 webbrowser.open("http://www.baidu.com")
 
+import urllib
+html = urllib.urlopen("http://www.baidu.com")
+temp_file = urllib.urlretrieve("http://www.baidu.com")
+urllib.urlcleanup()
+
 # script
 for letter in 'Python':
     print 'current letter:', letter
