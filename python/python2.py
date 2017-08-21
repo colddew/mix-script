@@ -24,7 +24,7 @@ import webbrowser
 webbrowser.open("http://www.baidu.com")
 
 import urllib
-html = urllib.urlopen("http://www.baidu.com")
+html = urllib.urlopen("http://www.baidu.com").read()
 temp_file = urllib.urlretrieve("http://www.baidu.com")
 urllib.urlcleanup()
 
