@@ -15,6 +15,16 @@
 # sudo pip install twisted
 # sudo pip install xlrd xlwt xlutils
 
+# pyspider
+brew install phantomjs
+sudo pip install pyspider
+pyspider
+# http://localhost:5000
+
+# Scrapy
+sudo pip install Scrapy
+scrapy
+
 # command
 python -V
 
