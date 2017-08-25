@@ -2,12 +2,18 @@
 # -*- coding: UTF-8 -*-
 
 # install
+# pip list
 # sudo pip install pymongo
 # sudo pip install MySQL-python
 # sudo install_name_tool -change libmysqlclient.18.dylib /usr/local/mysql/lib/libmysqlclient.18.dylib /Library/Python/2.7/site-packages/_mysql.so
 # sudo pip install requests
 # sudo pip install threadpool
 # sudo pip install apscheduler
+# sudo pip install beautifulsoup4
+# sudo pip install selenium
+# sudo pip install pyquery
+# sudo pip install twisted
+# sudo pip install xlrd xlwt xlutils
 
 # command
 python -V
@@ -36,6 +42,7 @@ fruits = ['banana', 'apple',  'mango']
 for index in range(len(fruits)):
     print 'current fruit:', fruits[index]
 
+# stream upload
 with open("/tmp/file.txt") as file:
     do(file)
 
