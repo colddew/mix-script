@@ -18,7 +18,7 @@
 # pyspider
 brew install phantomjs
 sudo pip install pyspider
-pyspider
+pyspider all
 # http://localhost:5000
 
 # Scrapy
