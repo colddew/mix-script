@@ -9,6 +9,9 @@ curl -I -H "Accept-Encoding: gzip, deflate" "https://www.plantlink.cn"
 curl -i -F 'image=@3.jpg' 'http://image.baidu.com/pictureup/uploadshitu?pos=upload&uptype=upload_pc&fm=index'
 curl -i -F 'image=@3.jpg' 'http://image.baidu.com/pictureup/uploadshitu?pos=upload&uptype=upload_pc&fm=index' -L
 
+# access through proxy server
+curl -x <proxy-ip>:<proxy-port> www.baidu.com
+
 # format directory
 tree
 
