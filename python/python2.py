@@ -25,6 +25,11 @@ pyspider all
 sudo pip install Scrapy
 scrapy
 
+# CasperJS
+brew update
+brew install casperjs
+brew upgrade casperjs
+
 # command
 python -V
 
