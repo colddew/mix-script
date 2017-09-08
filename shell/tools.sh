@@ -82,5 +82,11 @@ sort [-ntkr] <file-name>
 # cat uniq.txt | sort | uniq
 diff -r <first-file> <second-file> | diffstat
 
-# count file quantity
+# count file quantity under current path
 ls -l | grep "^-" | wc -l
+# count folder quantity under current path
+ls -l | grep "^d" | wc -l
+# count file quantity under all path
+ls -lR | grep "^-" | wc -l
+# count file quantity under all path
+ls -lR | grep "^d" | wc -l
