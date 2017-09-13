@@ -24,6 +24,7 @@ pyspider all
 # Scrapy
 sudo pip install Scrapy
 scrapy
+scrapy runspider XXX.py
 
 # CasperJS
 brew update
