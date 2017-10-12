@@ -1,17 +1,18 @@
 # install tensorflow on Mac OSX
 sudo easy_install pip
+sudo pip install --upgrade virtualenv
 virtualenv --system-site-packages ~/tensorflow
-# source ~/tensorflow/bin/activate
+source bin/activate
+# easy_install -U pip
+# pip install --upgrade tensorflow
+pip install --upgrade https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.3.0-py2-none-any.whl
 # deactivate
-easy_install -U pip
-pip install --upgrade tensorflow
-# pip install --upgrade https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.2.0-py2-none-any.whl
 
 # install tensorflow from sources
 brew install bazel
 # bazel version
 sudo pip install six numpy wheel
-git clone https://github.com/tensorflow/tensorflow
+git clone --recurse-submodules https://github.com/tensorflow/tensorflow
 cd tensorflow
 ./configure
 bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package
@@ -27,6 +28,9 @@ import tensorflow as tf
 hello = tf.constant('Hello, TensorFlow!')
 sess = tf.Session()
 print(sess.run(hello))
+a = tf.constant(10)
+b = tf.constant(32)
+print sess.run(a+b)
 
 # retrain Inception's final layer for new categories
 cd ~
@@ -43,3 +47,7 @@ bazel-bin/tensorflow/examples/label_image/label_image \
 --graph=/tmp/output_graph.pb --labels=/tmp/output_labels.txt \
 --output_layer=final_result --input_layer=Mul \
 --image=$HOME/Downloads/flower_photos/daisy/21652746_cc379e0eea_m.jpg
+
+# install TensorLayer
+pip install git+https://github.com/zsdonghao/tensorlayer.git
+import tensorlayer
