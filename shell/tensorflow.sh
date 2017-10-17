@@ -10,14 +10,16 @@ pip install --upgrade https://storage.googleapis.com/tensorflow/mac/cpu/tensorfl
 
 # install tensorflow from sources
 brew install bazel
+# brew upgrade bazel
 # bazel version
 sudo pip install six numpy wheel
 git clone --recurse-submodules https://github.com/tensorflow/tensorflow
 cd tensorflow
+git checkout r1.4
 ./configure
 bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package
 bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
-sudo pip install /tmp/tensorflow_pkg/tensorflow-1.2.0-cp27-cp27m-macosx_10_12_x86_64.whl
+sudo pip install /tmp/tensorflow_pkg/tensorflow-1.4.0rc1-cp27-cp27m-macosx_10_12_x86_64.whl
 
 # uninstall tensorflow
 # pip uninstall tensorflow
@@ -42,7 +44,8 @@ bazel build tensorflow/examples/image_retraining:retrain
 bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/flower_photos
 # bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/flower_photos --random_crop 5 --random_scale 5 --random_brightness 5
 
-bazel build tensorflow/examples/label_image:label_image && \
+# test categories
+bazel build tensorflow/examples/label_image:label_image
 bazel-bin/tensorflow/examples/label_image/label_image \
 --graph=/tmp/output_graph.pb --labels=/tmp/output_labels.txt \
 --output_layer=final_result --input_layer=Mul \
@@ -50,4 +53,6 @@ bazel-bin/tensorflow/examples/label_image/label_image \
 
 # install TensorLayer
 pip install git+https://github.com/zsdonghao/tensorlayer.git
+
+# validate TensorLayer
 import tensorlayer
