@@ -18,6 +18,7 @@ cd tensorflow
 git checkout r1.4
 ./configure
 bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package
+bazel build --config opt //tensorflow/java:libtensorflow_jni
 bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 sudo pip install /tmp/tensorflow_pkg/tensorflow-1.4.0rc1-cp27-cp27m-macosx_10_12_x86_64.whl
 
@@ -42,10 +43,11 @@ tensorboard --logdir /tmp/retrain_logs
 # http://localhost:6006
 bazel build tensorflow/examples/image_retraining:retrain
 bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/flower_photos
+# bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/pic/succulent-train
 # bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/flower_photos --random_crop 5 --random_scale 5 --random_brightness 5
 
 # test categories
-bazel build tensorflow/examples/label_image:label_image
+bazel build tensorflow/examples/label_image:label_image && \
 bazel-bin/tensorflow/examples/label_image/label_image \
 --graph=/tmp/output_graph.pb --labels=/tmp/output_labels.txt \
 --output_layer=final_result --input_layer=Mul \

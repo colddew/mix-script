@@ -88,5 +88,5 @@ ls -l | grep "^-" | wc -l
 ls -l | grep "^d" | wc -l
 # count file quantity under all path
 ls -lR | grep "^-" | wc -l
-# count file quantity under all path
+# count folder quantity under all path
 ls -lR | grep "^d" | wc -l
