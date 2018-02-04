@@ -15,12 +15,12 @@ brew install bazel
 sudo pip install six numpy wheel
 git clone --recurse-submodules https://github.com/tensorflow/tensorflow
 cd tensorflow
-git checkout r1.4
+git checkout r1.5
 ./configure
 bazel build --config=opt //tensorflow/tools/pip_package:build_pip_package
 bazel build --config opt //tensorflow/java:libtensorflow_jni
 bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
-sudo pip install /tmp/tensorflow_pkg/tensorflow-1.4.0rc1-cp27-cp27m-macosx_10_12_x86_64.whl
+sudo pip install /tmp/tensorflow_pkg/tensorflow-1.5.0-cp27-cp27m-macosx_10_12_x86_64.whl
 
 # uninstall tensorflow
 # pip uninstall tensorflow
