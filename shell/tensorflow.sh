@@ -41,6 +41,7 @@ curl -O http://download.tensorflow.org/example_images/flower_photos.tgz
 tar xzf flower_photos.tgz
 tensorboard --logdir /tmp/retrain_logs
 # http://localhost:6006
+# pkill -f "tensorboard"
 bazel build tensorflow/examples/image_retraining:retrain
 bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/flower_photos
 # bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/pic/succulent-train
