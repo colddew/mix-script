@@ -44,7 +44,7 @@ tensorboard --logdir /tmp/retrain_logs
 # pkill -f "tensorboard"
 bazel build tensorflow/examples/image_retraining:retrain
 bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/flower_photos
-# bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/pic/succulent-train
+# bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/pic/succulent-train --print_misclassified_test_images
 # bazel-bin/tensorflow/examples/image_retraining/retrain --image_dir ~/Downloads/flower_photos --random_crop 5 --random_scale 5 --random_brightness 5
 
 # test categories
