@@ -14,6 +14,8 @@ docker ps -l
 docker ps -n 3
 docker images
 docke image rm nginx
+// docker rmi nginx
+docker rmi `docker images -a -q`
 
 docker start webserver
 docker restart webserver
@@ -32,14 +34,25 @@ docker inspect daemon_ubuntu
 docker exec -d daemon_ubuntu touch /tmp/tmp.txt
 docker search puppet
 docker pull ubuntu:12.04
+docker login
 docker commit <container-id> <repository-name/image-name:tag>
 docker build -t <repository-name/image-name:tag> .
 docker history <container-id>
 docker port <container-id> <port>
 docker push <repository-name/image-name:tag>
+docker tag <container-id> <registry-host/repository-name/image-name>
 
 docker run hello-world
 docker run -d -p 80:80 --name webserver nginx
 // docker run -i -t ubuntu /bin/bash
 docker run --restart=always --name daemon_ubuntu -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done"
 docker run -i -t ubuntu:12.04 /bin/bash
+
+# private docker registry
+docker run -d -p 5000:5000 --restart always --name registry -v /tmp/docker/registry:/var/lib/registry registry:2.6.2
+# curl http://localhost:5000/v2/_catalog
+docker pull ubuntu
+docker tag ubuntu localhost:5000/ubuntu
+docker push localhost:5000/ubuntu
+docker rmi localhost:5000/ubuntu
+docker pull localhost:5000/ubuntu
