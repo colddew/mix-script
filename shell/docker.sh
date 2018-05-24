@@ -42,6 +42,12 @@ docker port <container-id> <port>
 docker push <repository-name/image-name:tag>
 docker tag <container-id> <registry-host/repository-name/image-name>
 
+docker network create <network>
+docker run --net=<network>
+docker network inspect <network>
+docker network connect <network> <container-name>
+docker network disconnect <network> <container-name>
+
 docker run hello-world
 docker run -d -p 80:80 --name webserver nginx
 // docker run -i -t ubuntu /bin/bash
@@ -49,6 +55,7 @@ docker run --restart=always --name daemon_ubuntu -d ubuntu /bin/sh -c "while tru
 docker run -i -t ubuntu:12.04 /bin/bash
 
 # private docker registry
+# docker run -v host-path:container-path
 docker run -d -p 5000:5000 --restart always --name registry -v /tmp/docker/registry:/var/lib/registry registry:2.6.2
 # curl http://localhost:5000/v2/_catalog
 docker pull ubuntu
@@ -56,3 +63,8 @@ docker tag ubuntu localhost:5000/ubuntu
 docker push localhost:5000/ubuntu
 docker rmi localhost:5000/ubuntu
 docker pull localhost:5000/ubuntu
+
+# http://localhost:8080/blue
+docker run -p 8080:8080 -v $HOME/docker/jenkins:/var/jenkins_home --name jenkins-blueocean jenkinsci/blueocean
+docker exec -it jenkins-blueocean bash
+docker logs jenkins-blueocean
