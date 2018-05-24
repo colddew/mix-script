@@ -64,7 +64,12 @@ docker push localhost:5000/ubuntu
 docker rmi localhost:5000/ubuntu
 docker pull localhost:5000/ubuntu
 
+# jenkins
 # http://localhost:8080/blue
-docker run -p 8080:8080 -v $HOME/docker/jenkins:/var/jenkins_home --name jenkins-blueocean jenkinsci/blueocean
-docker exec -it jenkins-blueocean bash
+docker run -d -p 8080:8080 -v $HOME/docker/jenkins:/var/jenkins_home --name jenkins-blueocean jenkinsci/blueocean
+docker exec -it jenkins-blueocean /bin/bash
 docker logs jenkins-blueocean
+
+# gitlab
+# http://localhost/gitlab
+docker run -d -p 443:443 -p 80:80 -p 22:22 --name gitlab --restart always -v $HOME/docker/gitlab/config:/etc/gitlab -v $HOME/docker/gitlab/logs:/var/log/gitlab -v $HOME/docker/gitlab/data:/var/opt/gitlab gitlab/gitlab-ce:latest
