@@ -17,6 +17,7 @@ docker run -d -p 8300:8300 -p 8301:8301 -p 8301:8301/udp -p 8302:8302 -p 8302:83
 # JOIN_IP="$(docker inspect -f '{{.NetworkSettings.IPAddress}}' node1)"
 docker run -d --name client1 -h client1 consul agent -node=client1 -join 172.17.0.2 -datacenter=dc1
 docker run -d --name client2 -h client2 consul agent -node=client2 -join 172.17.0.2 -datacenter=dc1
+# http://localhost:8500
 
 # consul agent
 consul agent -data-dir /tmp/consul -node=<local-ip> -bind=<local-ip> -join=<remote-consul-server>
