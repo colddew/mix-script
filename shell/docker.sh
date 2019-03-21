@@ -74,6 +74,10 @@ docker logs jenkins-blueocean
 # http://localhost/gitlab
 docker run -d -p 443:443 -p 80:80 -p 22:22 --name gitlab --restart always -v $HOME/docker/gitlab/config:/etc/gitlab -v $HOME/docker/gitlab/logs:/var/log/gitlab -v $HOME/docker/gitlab/data:/var/opt/gitlab gitlab/gitlab-ce:latest
 
+# portainer
+# http://localhost:9000
+docker run -d -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock --name prtainer portainer/portainer
+
 # docker-compose
 docker-compose --version
 docker-compose up -d
