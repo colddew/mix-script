@@ -1,3 +1,6 @@
+# kubectl completion
+echo "source <(kubectl completion zsh)" >> ~/.zshrc
+
 # minikube
 # create cluster
 minikube version
