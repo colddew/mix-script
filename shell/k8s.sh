@@ -29,6 +29,18 @@ kubectl delete services example-service
 kubectl delete deployment hello-world
 
 # frontend connect to backend service 
+# nginx-frontend.conf
+# upstream hello {
+#    server hello;
+#}
+#server {
+#    listen 80;
+#
+#    location / {
+#        proxy_pass http://hello;
+#    }
+#}
+
 kubectl create -f hello.yaml
 kubectl get deployments
 kubectl describe deployment hello
