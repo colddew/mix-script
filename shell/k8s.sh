@@ -1,76 +1,40 @@
 # kubectl completion
 echo "source <(kubectl completion zsh)" >> ~/.zshrc
 
-# minikube
-# create cluster
-minikube version
-minikube start
-kubectl version
-kubectl cluster-info
-kubectl get nodes 	
-# deploy app
-kubectl run kubernetes-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1 --port=8080
-kubectl get deployments
+# add k8s dashboard
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 kubectl proxy
-curl http://localhost:8001/version
-export POD_NAME=$(kubectl get pods -o go-template --template '{{range .items}}{{.metdata.name}}{{"\n"}}{{end}}')
-echo Name of the Pod: $POD_NAME
-curl http://localhost:8001/api/v1/namespaces/default/pods/$POD_NAME/proxy/
-# explore app
-kubectl get pods
-kubectl describe pods
-kubectl logs $POD_NAME
-kubectl exec $POD_NAME env
-kubectl exec -it $POD_NAME bash
-cat server.js
-curl localhost:8080
-exit
-# expose app publicly
-kubectl get services
-kubectl expose deployment/kubernetes-bootcamp --type="NodePort" --port 8080
-kubectl describe services/kubernetes-bootcamp
-export NODE_PORT=$(kubectl get services/kubernetes-bootcamp -o go-template='{{(index.spec.ports 0).nodePort}}')
-curl $(minikube ip):$NODE_PORT
-kubectl describe deployment
-kubectl get pods -l run=kubernetes-bootcamp
-kubectl get services -l run=kubernetes-bootcamp
-export POD_NAME=$(kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')
-kubectl label pod $POD_NAME app=v1
-kubectl describe pods $POD_NAME
-kubectl get pods -l app=v1
-kubectl delete service -l run=kubernetes-bootcamp
-kubectl get services
-curl $(minikube ip):$NODE_PORT
-kubectl exec -it $POD_NAME curl localhost:8080
-# scale app
+TOKEN=$(kubectl -n kube-system describe secret default| awk '$1=="token:"{print $2}')
+kubectl config set-credentials docker-for-desktop --token="${TOKEN}"
+# http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+
+# check k8s installation
+kubectl version
+kubectl get nodes
+kubectl cluster-info
+
+# access k8s service 
+kubectl run hello-world --replicas=2 --labels="run=load-balancer-example" --image=anjia0532/google-samples.node-hello:1.0 --port=8080
+kubectl get deployments hello-world
+kubectl describe deployments hello-world
+kubectl get replicasets
+kubectl describe replicasets
+kubectl expose deployment hello-world --type=NodePort --name=example-service
+# kubectl expose deployment hello-world --type=LoadBalancer --name=example-service
+kubectl get service example-service
+kubectl describe services example-service
+kubectl get pods --selector="run=load-balancer-example" --output=wide
+# curl http://<public-node-ip>:<node-port>
+kubectl delete services example-service
+kubectl delete deployment hello-world
+
+# frontend connect to backend service 
+kubectl create -f hello.yaml
 kubectl get deployments
-kubectl scale deployments/kubernetes-bootcamp --replicas=4
-kubectl get deployments
-kubectl get pods -o wide
-kubectl describe deployments/kubernetes-bootcamp
-kubectl describe services/kubernetes-bootcamp
-export NODE_PORT=$(kubectl get services/kubernetes-bootcamp -o go-template='{{(index.spec.ports 0).nodePort}}')
-echo NODE_PORT=$NODE_PORT
-curl $(minikube ip):$NODE_PORT
-kubectl scale deployments/kubernetes-bootcamp --replicas=2
-kubectl get deployments
-kubectl get pods -o wide
-# update app
-kubectl get deployments
-kubectl get pods
-kubectl describe pods
-set image deployments/kubernetes-bootcamp kubernetes-bootcamp=jocatalin/kubernetes-bootcamp:v2
-kubectl get pods
-kubectl describe services/kubernetes-bootcamp
-export NODE_PORT=$(kubectl get services/kubernetes-bootcamp -o go-template='{{(index.spec.ports 0).nodePort}}')
-echo NODE_PORT=$NODE_PORT
-curl $(minikube ip):$NODE_PORT
-kubectl rollout status deployments/kubernetes-bootcamp
-kubectl describe pods
-kubectl set image deployments/kubernetes-bootcamp kubernetes-bootcamp=gcr.io/google-samples/kubernetes-bootcamp:v10
-kubectl get deployments
-kubectl get pods
-kubectl describe pods
-kubectl rollout undo deployments/kubernetes-bootcamp
-kubectl get pods
-kubectl describe pods
+kubectl describe deployment hello
+kubectl create -f hello-service.yaml
+kubectl get service hello -o wide
+kubectl create -f frontend.yaml
+kubectl create -f frontend-service.yaml
+kubectl get service frontend --watch
+curl http://${EXTERNAL_IP}
