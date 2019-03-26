@@ -12,6 +12,7 @@ kubectl config set-credentials docker-for-desktop --token="${TOKEN}"
 kubectl version
 kubectl get nodes
 kubectl cluster-info
+kubectl logs <pod-name> -f
 
 # access k8s service 
 kubectl run hello-world --replicas=2 --labels="run=load-balancer-example" --image=anjia0532/google-samples.node-hello:1.0 --port=8080
@@ -50,3 +51,8 @@ kubectl create -f frontend.yaml
 kubectl create -f frontend-service.yaml
 kubectl get service frontend --watch
 curl http://${EXTERNAL_IP}
+
+# update and rollback version
+kubectl set image deployment nginx-deployment nginx=nginx:1.13
+kubectl rollout history deployment nginx-deployment
+kubectl rollout undo deployment nginx-deployment
