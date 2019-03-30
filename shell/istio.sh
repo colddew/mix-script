@@ -1,4 +1,5 @@
 # fast installation without helm
+# download package and set environment variable
 cd /usr/local/istio
 for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
 
@@ -35,3 +36,10 @@ helm template install/kubernetes/helm/istio --name istio --namespace istio-syste
 kubectl delete namespace istio-system
 
 # kubectl delete -f install/kubernetes/helm/istio-init/files
+
+# install istio by helm and tiller
+kubectl apply -f install/kubernetes/helm/helm-service-account.yaml
+helm init --service-account tiller
+helm install install/kubernetes/helm/istio-init --name istio-init --namespace istio-system
+kubectl get crds | grep 'istio.io\|certmanager.k8s.io' | wc -l
+helm install install/kubernetes/helm/istio --name istio --namespace istio-system 
