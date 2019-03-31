@@ -99,6 +99,7 @@ kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-v3.yaml
 
 # telemetry
 istioctl create -f telemetry.yaml
+kubectl -n istio-system get svc prometheus
 # http://$GATEWAY_URL/productpage
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=prometheus -o jsonpath='{.items[0].metadata.name}') 9090:9090 &
 # killall kubectl
@@ -109,3 +110,27 @@ kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=pr
 # rate(istio_request_bytes_count{destination_service=~"productpage.*", response_code="200"}[5m])
 kubectl -n istio-system logs -l istio-mixer-type=telemetry -c mixer | grep "instance='newlog.logentry'"
 istioctl delete -f telemetry.yaml
+
+# grafana dashboard
+helm template --set grafana.enabled=true install/kubernetes/helm/istio --name istio --namespace istio-system | kubectl apply -f -
+kubectl -n istio-system get svc prometheus
+kubectl -n istio-system get svc grafana
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}') 3000:3000 &
+# http://localhost:3000/dashboard/db/istio-mesh-dashboard
+# http://localhost:3000/dashboard/db/istio-service-dashboard
+# http://localhost:3000/dashboard/db/istio-workload-dashboard 
+killall kubectl
+
+# kubectl -n istio-system edit deploy istio-pilot
+
+# jaeger
+helm template install/kubernetes/helm/istio --name istio --namespace istio-system --set tracing.enabled=true,tracing.ingress.enabled=true | kubectl apply -f -
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=jaeger -o jsonpath='{.items[0].metadata.name}') 16686:16686 &
+# http://localhost:16686
+killall kubectl
+
+# zipkin
+helm template install/kubernetes/helm/istio --name istio --namespace istio-system --set tracing.enabled=true,tracing.provider=zipkin,tracing.ingress.enabled=true | kubectl apply -f -
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=zipkin -o jsonpath='{.items[0].metadata.name}') 9411:9411 &
+# http://localhost:9411
+killall kubectl
