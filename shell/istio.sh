@@ -96,3 +96,16 @@ kubectl get virtualservice reviews -o yaml
 kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-v3.yaml
 
 # kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+
+# telemetry
+istioctl create -f telemetry.yaml
+# http://$GATEWAY_URL/productpage
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=prometheus -o jsonpath='{.items[0].metadata.name}') 9090:9090 &
+# killall kubectl
+# http://localhost:9090/graph
+# Expression: istio_request_bytes_count
+# istio_request_bytes_count{destination_service="productpage.default.svc.cluster.local"}
+# istio_request_bytes_count{destination_service="reviews.default.svc.cluster.local", destination_version="v3"}
+# rate(istio_request_bytes_count{destination_service=~"productpage.*", response_code="200"}[5m])
+kubectl -n istio-system logs -l istio-mixer-type=telemetry -c mixer | grep "instance='newlog.logentry'"
+istioctl delete -f telemetry.yaml
