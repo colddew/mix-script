@@ -109,6 +109,7 @@ kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=pr
 # istio_request_bytes_count{destination_service="reviews.default.svc.cluster.local", destination_version="v3"}
 # rate(istio_request_bytes_count{destination_service=~"productpage.*", response_code="200"}[5m])
 kubectl -n istio-system logs -l istio-mixer-type=telemetry -c mixer | grep "instance='newlog.logentry'"
+# kubectl -n istio-system logs $(kubectl -n istio-system get pods -l istio=mixer -o jsonpath='{.items[0].metadata.name}') mixer | grep "newlog.logentry"
 istioctl delete -f telemetry.yaml
 
 # grafana dashboard
@@ -116,6 +117,7 @@ helm template --set grafana.enabled=true install/kubernetes/helm/istio --name is
 kubectl -n istio-system get svc prometheus
 kubectl -n istio-system get svc grafana
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana -o jsonpath='{.items[0].metadata.name}') 3000:3000 &
+watch -n 1 curl -s http://${GATEWAY_URL}/productpage
 # http://localhost:3000/dashboard/db/istio-mesh-dashboard
 # http://localhost:3000/dashboard/db/istio-service-dashboard
 # http://localhost:3000/dashboard/db/istio-workload-dashboard 
@@ -131,6 +133,7 @@ killall kubectl
 
 # zipkin
 helm template install/kubernetes/helm/istio --name istio --namespace istio-system --set tracing.enabled=true,tracing.provider=zipkin,tracing.ingress.enabled=true | kubectl apply -f -
+kubectl get svc -n istio-system -o wide
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=zipkin -o jsonpath='{.items[0].metadata.name}') 9411:9411 &
 # http://localhost:9411
 killall kubectl
