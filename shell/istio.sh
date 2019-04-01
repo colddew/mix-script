@@ -137,3 +137,33 @@ kubectl get svc -n istio-system -o wide
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=zipkin -o jsonpath='{.items[0].metadata.name}') 9411:9411 &
 # http://localhost:9411
 killall kubectl
+
+# kiali
+KIALI_USERNAME=$(read '?Kiali Username: ' uval && echo -n $uval | base64)
+KIALI_PASSPHRASE=$(read -s "?Kiali Passphrase: " pval && echo -n $pval | base64)
+NAMESPACE=istio-system
+# kubectl create namespace $NAMESPACE
+
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kiali
+  namespace: $NAMESPACE
+  labels:
+    app: kiali
+type: Opaque
+data:
+  username: $KIALI_USERNAME
+  passphrase: $KIALI_PASSPHRASE
+EOF
+
+helm template install/kubernetes/helm/istio --name istio --namespace istio-system --set tracing.enabled=true --set tracing.ingress.enabled=true --set grafana.enabled=true --set kiali.enabled=true --set "kiali.dashboard.jaegerURL=http://jaeger-query:16686" --set "kiali.dashboard.grafanaURL=http://grafana:3000" | kubectl apply -f -
+
+kubectl -n istio-system get svc kiali
+watch -n 1 curl -o /dev/null -s -w %{http_code} $GATEWAY_URL/productpage
+kubectl get svc kiali -n istio-system -o wide
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001 &
+# http://localhost:20001/kiali/console
+# http://localhost:20001/kiali/api/namespaces/graph?namespaces=istio-system&graphType=app
+# kubectl delete all,secrets,sa,configmaps,deployments,ingresses,clusterroles,clusterrolebindings,virtualservices,destinationrules --selector=app=kiali -n istio-system
