@@ -1,5 +1,11 @@
+brew install watch
+brew pin $FORMULA
+brew unpin $FORMULA
+# update homebrew
 brew update
-brew doctor
+brew outdated
+# upgrade software package
 brew upgrade
 brew cleanup
-brew install watch
+# brew style
+brew doctor
