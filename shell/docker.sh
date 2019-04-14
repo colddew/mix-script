@@ -61,6 +61,8 @@ docker run -d -p 5000:5000 --restart always --name registry -v /tmp/docker/regis
 docker pull ubuntu
 docker tag ubuntu localhost:5000/ubuntu
 docker push localhost:5000/ubuntu
+# create repository on dockerhub and push image to dockerhub
+# docker push colddew/micro-service-a:1.0-SNAPSHOT
 docker rmi localhost:5000/ubuntu
 docker pull localhost:5000/ubuntu
 
