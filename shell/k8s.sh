@@ -13,6 +13,7 @@ kubectl version
 kubectl get nodes
 kubectl cluster-info
 kubectl logs <pod-name> -f
+kubectl logs <pod-name> -c <container-name>
 
 # access k8s service 
 kubectl run hello-world --replicas=2 --labels="run=load-balancer-example" --image=anjia0532/google-samples.node-hello:1.0 --port=8080
