@@ -10,6 +10,7 @@ kubectl get svc -n istio-system
 kubectl get pods -n istio-system
 
 kubectl label namespace <namespace> istio-injection=enabled
+istioctl proxy-status
 kubectl create -n <namespace> -f <your-app-spec>.yaml
 
 istioctl kube-inject -f <your-app-spec>.yaml | kubectl apply -f -
@@ -97,7 +98,7 @@ kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-v3.yaml
 
 # kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
 
-# telemetry
+# prometheus
 istioctl create -f telemetry.yaml
 kubectl -n istio-system get svc prometheus
 # http://$GATEWAY_URL/productpage
