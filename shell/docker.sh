@@ -74,7 +74,10 @@ docker logs jenkins-blueocean
 
 # gitlab
 # http://localhost/gitlab
-docker run -d -p 443:443 -p 80:80 -p 22:22 --name gitlab --restart always -v $HOME/docker/gitlab/config:/etc/gitlab -v $HOME/docker/gitlab/logs:/var/log/gitlab -v $HOME/docker/gitlab/data:/var/opt/gitlab gitlab/gitlab-ce:latest
+# docker run -d -p 443:443 -p 80:80 -p 22:22 --name gitlab --restart always -v $HOME/docker/gitlab/config:/etc/gitlab -v $HOME/docker/gitlab/logs:/var/log/gitlab -v $HOME/docker/gitlab/data:/var/opt/gitlab gitlab/gitlab-ce:latest
+# http://localhost:8080/gitlab
+docker run -d -p 8443:443 -p 8080:80 -p 22:22 --name gitlab --restart always -v $HOME/docker/gitlab/config:/etc/gitlab -v $HOME/docker/gitlab/logs:/var/log/gitlab -v $HOME/docker/gitlab/data:/var/opt/gitlab gitlab/gitlab-ce:latest
+
 
 # portainer
 # http://localhost:9000
