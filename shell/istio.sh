@@ -33,20 +33,18 @@ helm template install/kubernetes/helm/istio --name istio --namespace istio-syste
 kubectl get svc -n istio-system
 kubectl get pods -n istio-system
 
-helm template install/kubernetes/helm/istio --name istio --namespace istio-system | kubectl delete -f -
-kubectl delete namespace istio-system
-
+# helm template install/kubernetes/helm/istio --name istio --namespace istio-system | kubectl delete -f -
+# kubectl delete namespace istio-system
 # kubectl delete -f install/kubernetes/helm/istio-init/files
 
 # install istio by helm and tiller
 docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.13.1
 docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.13.1 gcr.io/kubernetes-helm/tiller:v2.13.1
 docker rmi registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.13.1
-
+# helm reset --force
 kubectl apply -f install/kubernetes/helm/helm-service-account.yaml
 helm init --service-account tiller
 helm version
-
 helm install install/kubernetes/helm/istio-init --name istio-init --namespace istio-system
 kubectl get crds | grep 'istio.io\|certmanager.k8s.io' | wc -l
 helm install install/kubernetes/helm/istio --name istio --namespace istio-system 
