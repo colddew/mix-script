@@ -56,7 +56,7 @@ docker run -i -t ubuntu:12.04 /bin/bash
 
 # private docker registry
 # docker run -v host-path:container-path
-docker run -d -p 5000:5000 --restart always --name registry -v /tmp/docker/registry:/var/lib/registry registry:2.6.2
+docker run -d -p 5000:5000 --restart always --name registry -v /tmp/docker/registry:/var/lib/registry registry:2
 # curl http://localhost:5000/v2/_catalog
 docker pull ubuntu
 docker tag ubuntu localhost:5000/ubuntu
@@ -100,3 +100,10 @@ pred='process matches ".*(ocker|vpnkit).*" || (process in {"taskgated-helper", "
 docker run -e "SPRING_PROFILES_ACTIVE=dev" -p 8080:8080 -t springio/gs-spring-boot-docker
 docker run -e "SPRING_PROFILES_ACTIVE=prod" -p 8080:8080 -t springio/gs-spring-boot-docker
 docker run -e "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=5005,server=y,suspend=n" -p 8080:8080 -p 5005:5005 -t springio/gs-spring-boot-docker
+
+# harbor
+# https://github.com/goharbor/harbor-helm
+cd harbor-helm
+helm install --name harbor .
+helm upgrade --set externalURL='http://core.harbor.plantlink.io' harbor .
+helm delete --purge harbor
