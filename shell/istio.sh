@@ -2,37 +2,28 @@
 # download package and set environment variable
 cd /usr/local/istio
 for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
-
 kubectl apply -f install/kubernetes/istio-demo.yaml
 # kubectl apply -f install/kubernetes/istio-demo-auth.yaml
-
 kubectl get svc -n istio-system
 kubectl get pods -n istio-system
-
 kubectl label namespace <namespace> istio-injection=enabled
 istioctl proxy-status
 kubectl create -n <namespace> -f <your-app-spec>.yaml
-
 istioctl kube-inject -f <your-app-spec>.yaml | kubectl apply -f -
-
 kubectl delete -f install/kubernetes/istio-demo.yaml
 # kubectl delete -f install/kubernetes/istio-demo-auth.yaml
-
 for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl delete -f $i; done
 
 # install istio by helm
 # brew install kubernetes-helm
 helm help
 helm init --history-max 200
-
 kubectl create namespace istio-system
 helm template install/kubernetes/helm/istio-init --name istio-init --namespace istio-system | kubectl apply -f -
 kubectl get crds | grep 'istio.io\|certmanager.k8s.io' | wc -l
 helm template install/kubernetes/helm/istio --name istio --namespace istio-system | kubectl apply -f -
-
 kubectl get svc -n istio-system
 kubectl get pods -n istio-system
-
 # helm template install/kubernetes/helm/istio --name istio --namespace istio-system | kubectl delete -f -
 # kubectl delete namespace istio-system
 # kubectl delete -f install/kubernetes/helm/istio-init/files
@@ -103,7 +94,7 @@ kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-v3.yaml
 # kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
 
 # prometheus
-istioctl create -f telemetry.yaml
+istioctl create -f ./k8s.conf/telemetry.yaml
 kubectl -n istio-system get svc prometheus
 # http://$GATEWAY_URL/productpage
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=prometheus -o jsonpath='{.items[0].metadata.name}') 9090:9090 &
@@ -163,7 +154,7 @@ data:
   passphrase: $KIALI_PASSPHRASE
 EOF
 
-helm template install/kubernetes/helm/istio --name istio --namespace istio-system --set tracing.enabled=true --set tracing.ingress.enabled=true --set grafana.enabled=true --set kiali.enabled=true --set "kiali.dashboard.jaegerURL=http://jaeger-query:16686" --set "kiali.dashboard.grafanaURL=http://grafana:3000" | kubectl apply -f -
+helm template install/kubernetes/helm/istio --name istio --namespace istio-system --set tracing.enabled=true --set tracing.ingress.enabled=true --set grafana.enabled=true --set kiali.enabled=true --set "kiali.dashboard.jaegerURL=http://localhost:16686" --set "kiali.dashboard.grafanaURL=http://grafana:3000" | kubectl apply -f -
 
 kubectl -n istio-system get svc kiali
 watch -n 1 curl -o /dev/null -s -w %{http_code} $GATEWAY_URL/productpage

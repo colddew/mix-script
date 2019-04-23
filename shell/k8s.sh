@@ -6,6 +6,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/
 kubectl proxy
 TOKEN=$(kubectl -n kube-system describe secret default| awk '$1=="token:"{print $2}')
 kubectl config set-credentials docker-for-desktop --token="${TOKEN}"
+# shift + command + .
 # http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 
 # check k8s installation
