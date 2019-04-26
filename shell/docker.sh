@@ -29,6 +29,9 @@ docker logs --tail 10 -tf daemon_ubuntu
 docker top daemon_ubuntu
 docker stats daemon_ubuntu
 docker inspect daemon_ubuntu
+# query container ip
+docker inspect --format='{{.NetworkSettings.IPAddress}}' <container-id>
+
 # control + c
 # docker exec -i -t daemon_ubuntu /bin/bash
 docker exec -d daemon_ubuntu touch /tmp/tmp.txt
@@ -67,17 +70,27 @@ docker rmi localhost:5000/ubuntu
 docker pull localhost:5000/ubuntu
 
 # jenkins
+# https://jenkins.io/doc/book/installing/#installing-jenkins
 # http://localhost:8080/blue
-docker run -d -p 8080:8080 -v $HOME/docker/jenkins:/var/jenkins_home --name jenkins-blueocean jenkinsci/blueocean
-docker exec -it jenkins-blueocean /bin/bash
-docker logs jenkins-blueocean
+# http://localhost:8888
+# docker run -p 8888:8080 -p 50000:50000 jenkins/jenkins:lts
+docker run -d -p 8888:8080  -p 50000:50000 -v $HOME/docker/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins jenkinsci/blueocean
+docker exec -it jenkins bash
+docker logs jenkins -f
+
+# docker host port forwarding
+brew install socat
+socat TCP-LISTEN:2375,reuseaddr,fork UNIX-CONNECT:/var/run/docker.sock &
+# tcp://<host-ip>:2375
 
 # gitlab
 # http://localhost/gitlab
 # docker run -d -p 443:443 -p 80:80 -p 22:22 --name gitlab --restart always -v $HOME/docker/gitlab/config:/etc/gitlab -v $HOME/docker/gitlab/logs:/var/log/gitlab -v $HOME/docker/gitlab/data:/var/opt/gitlab gitlab/gitlab-ce:latest
 # http://localhost:8080/gitlab
 docker run -d -p 8443:443 -p 8080:80 -p 22:22 --name gitlab --restart always -v $HOME/docker/gitlab/config:/etc/gitlab -v $HOME/docker/gitlab/logs:/var/log/gitlab -v $HOME/docker/gitlab/data:/var/opt/gitlab gitlab/gitlab-ce:latest
-
+# webhook for jenkins
+http://<jenkins>/gitlab/build_now/<job-name>
+http://<jenkins>/project/<job-name>
 
 # portainer
 # http://localhost:9000
@@ -107,3 +120,12 @@ cd harbor-helm
 helm install --name harbor .
 helm upgrade --set externalURL='http://core.harbor.plantlink.io' harbor .
 helm delete --purge harbor
+
+# sonatype nexus
+docker run -d -p 8081:8081 --name nexus -v $HOME/docker/nexus-data:/nexus-data sonatype/nexus3
+# http://localhost:8081
+curl -u admin:admin123 http://localhost:8081/service/metrics/ping
+docker logs -f nexus
+# docker run -d -p 8081:8081 --name nexus -e INSTALL4J_ADD_VM_PARAMS="-Xms2g -Xmx2g -XX:MaxDirectMemorySize=3g  -Djava.util.prefs.userRoot=$HOME/docker/nexus-data/prefs" sonatype/nexus3
+# docker volume create --name nexus-data
+# docker run -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus3
