@@ -76,12 +76,20 @@ docker pull localhost:5000/ubuntu
 # docker run -p 8888:8080 -p 50000:50000 jenkins/jenkins:lts
 docker run -d -p 8888:8080  -p 50000:50000 -v $HOME/docker/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins jenkinsci/blueocean
 docker exec -it jenkins bash
+# docker exec -it -u root <contain-id> /bin/bash
 docker logs jenkins -f
 
 # docker host port forwarding
 brew install socat
 socat TCP-LISTEN:2375,reuseaddr,fork UNIX-CONNECT:/var/run/docker.sock &
 # tcp://<host-ip>:2375
+
+# add access privilege for jenkins container
+# groupadd docker
+# gpasswd -a jenkins docker
+# newgrp docker
+# groups jenkins
+# docker ps
 
 # gitlab
 # http://localhost/gitlab
