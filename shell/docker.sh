@@ -74,7 +74,7 @@ docker pull localhost:5000/ubuntu
 # http://localhost:8080/blue
 # http://localhost:8888
 # docker run -p 8888:8080 -p 50000:50000 jenkins/jenkins:lts
-docker run -d -p 8888:8080  -p 50000:50000 -v $HOME/docker/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins jenkinsci/blueocean
+docker run -d -u root -p 8888:8080  -p 50000:50000 -v $HOME/docker/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins jenkinsci/blueocean
 docker exec -it jenkins bash
 # docker exec -it -u root <contain-id> /bin/bash
 docker logs jenkins -f
