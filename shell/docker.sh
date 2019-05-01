@@ -84,6 +84,10 @@ brew install socat
 socat TCP-LISTEN:2375,reuseaddr,fork UNIX-CONNECT:/var/run/docker.sock &
 # tcp://<host-ip>:2375
 
+# config k8s credentials string in `config_base64` file for jenkins, `clusters.cluster.server` should convert to container internal ip  
+cd ~/.kube
+base64 config_k8s > config_k8s_base64
+
 # add access privilege for jenkins container
 # groupadd docker
 # gpasswd -a jenkins docker
@@ -158,6 +162,8 @@ expose.type: ingress
 expose.ingress.annotations: `kkubernetes.io/ingress.class : nginx`
 
 # upload docker image
+# mkdir -p /etc/docker/certs.d/harbor.local
+# copy ca.crt to `/etc/docker/certs.d/harbor.local`
 docker tag busybox:1.30.1 harbor.local/<harbor-library>/busybox:1.30.1
 docker login harbor.local
 docker push harbor.local/<harbor-library>/busybox:1.30.1
