@@ -74,7 +74,7 @@ docker pull localhost:5000/ubuntu
 # http://localhost:8080/blue
 # http://localhost:8888
 # docker run -p 8888:8080 -p 50000:50000 jenkins/jenkins:lts
-docker run -d -u root -p 8888:8080  -p 50000:50000 -v $HOME/docker/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins jenkinsci/blueocean
+docker run -d -u root -p 8888:8080  -p 50000:50000 -v $HOME/docker/jenkins:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins --restart always jenkinsci/blueocean
 docker exec -it jenkins bash
 # docker exec -it -u root <contain-id> /bin/bash
 docker logs jenkins -f
@@ -138,21 +138,29 @@ helm install --name harbor --namespace harbor .
 helm status harbor
 helm upgrade --set externalURL='http://core.harbor.plantlink.io' harbor --namespace harbor .
 
-# NodePort mode
+# harbor: NodePort mode
 # https://localhost:<https-node-port>
 expose.type: nodePort
 expose.tls.commonName: "not-a-common-name"
 
-# Ingress mode
+# harbor: Ingress mode
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/baremetal/service-nodeport.yaml
-# kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml
+# nginx ingress: NodePort mode
+# kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/baremetal/service-nodeport.yaml
+# kubectl -n ingress-nginx describe service
+# https://harbor.local:<https-node-port>
+# nginx ingress: LoadBalancer mode
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml
 kubectl -n ingress-nginx exec <nginx-ingress-controller-xxx> -- /nginx-ingress-controller --version
 kubectl -n ingress-nginx exec <nginx-ingress-controller-xxx> -- cat /etc/nginx/nginx.conf
-kubectl -n ingress-nginx describe service
-# https://harbor.local:<https-node-port>
+# https://harbor.local
 expose.type: ingress
 expose.ingress.annotations: `kkubernetes.io/ingress.class : nginx`
+
+# upload docker image
+docker tag busybox:1.30.1 harbor.local/<harbor-library>/busybox:1.30.1
+docker login harbor.local
+docker push harbor.local/<harbor-library>/busybox:1.30.1
 
 # delete harbor
 helm delete --purge harbor
