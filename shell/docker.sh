@@ -122,13 +122,6 @@ docker run -e "SPRING_PROFILES_ACTIVE=dev" -p 8080:8080 -t springio/gs-spring-bo
 docker run -e "SPRING_PROFILES_ACTIVE=prod" -p 8080:8080 -t springio/gs-spring-boot-docker
 docker run -e "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,address=5005,server=y,suspend=n" -p 8080:8080 -p 5005:5005 -t springio/gs-spring-boot-docker
 
-# harbor
-# https://github.com/goharbor/harbor-helm
-cd harbor-helm
-helm install --name harbor .
-helm upgrade --set externalURL='http://core.harbor.plantlink.io' harbor .
-helm delete --purge harbor
-
 # sonatype nexus
 docker run -d -p 8081:8081 --name nexus -v $HOME/docker/nexus-data:/nexus-data sonatype/nexus3
 # http://localhost:8081
@@ -137,3 +130,36 @@ docker logs -f nexus
 # docker run -d -p 8081:8081 --name nexus -e INSTALL4J_ADD_VM_PARAMS="-Xms2g -Xmx2g -XX:MaxDirectMemorySize=3g  -Djava.util.prefs.userRoot=$HOME/docker/nexus-data/prefs" sonatype/nexus3
 # docker volume create --name nexus-data
 # docker run -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus3
+
+# harbor
+# https://github.com/goharbor/harbor-helm
+cd harbor-helm
+helm install --name harbor --namespace harbor .
+helm status harbor
+helm upgrade --set externalURL='http://core.harbor.plantlink.io' harbor --namespace harbor .
+
+# NodePort mode
+# https://localhost:<https-node-port>
+expose.type: nodePort
+expose.tls.commonName: "not-a-common-name"
+
+# Ingress mode
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/baremetal/service-nodeport.yaml
+# kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml
+kubectl -n ingress-nginx exec <nginx-ingress-controller-xxx> -- /nginx-ingress-controller --version
+kubectl -n ingress-nginx exec <nginx-ingress-controller-xxx> -- cat /etc/nginx/nginx.conf
+kubectl -n ingress-nginx describe service
+# https://harbor.local:<https-node-port>
+expose.type: ingress
+expose.ingress.annotations: `kkubernetes.io/ingress.class : nginx`
+
+# delete harbor
+helm delete --purge harbor
+kubectl  -n harbor delete  persistentvolumeclaim data-harbor-harbor-redis-0
+kubectl  -n harbor delete  persistentvolumeclaim database-data-harbor-harbor-database-0
+kubectl  -n harbor delete  persistentvolumeclaim harbor-harbor-chartmuseum
+kubectl  -n harbor delete  persistentvolumeclaim harbor-harbor-jobservice
+kubectl  -n harbor delete  persistentvolumeclaim harbor-harbor-registry
+kubectl delete namespace harbor
+
