@@ -15,7 +15,12 @@ docker ps -n 3
 docker images
 docke image rm nginx
 # docker rmi nginx
+
+# remove all/invalid image
 docker rmi `docker images -a -q`
+docker images --filter=reference='harbor.local/cn.plantlink/*:*'
+docker images -f "dangling=true" -q | xargs docker rmi
+docker rmi ${docker images -f "dangling=true" -q}
 
 docker start webserver
 docker restart webserver
