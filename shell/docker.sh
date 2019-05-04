@@ -182,3 +182,5 @@ kubectl  -n harbor delete  persistentvolumeclaim harbor-harbor-jobservice
 kubectl  -n harbor delete  persistentvolumeclaim harbor-harbor-registry
 kubectl delete namespace harbor
 
+# docker in docker
+docker run --privileged --name docker-in-docker -d docker:dind
