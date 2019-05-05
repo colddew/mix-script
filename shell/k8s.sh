@@ -60,3 +60,9 @@ curl http://${EXTERNAL_IP}
 kubectl set image deployment nginx-deployment nginx=nginx:1.13
 kubectl rollout history deployment nginx-deployment
 kubectl rollout undo deployment nginx-deployment
+
+# ingress & ingress controller
+# An Ingress is an API object that defines rules which allow external access to services in a cluster. An Ingress controller fulfills the rules set in the Ingress.
+kubectl describe ingress <ingress-name>
+kubectl edit ingress <ingress-name>
+# kubectl replace -f <modified-ingress-yaml>
