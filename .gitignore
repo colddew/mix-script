@@ -1,3 +1,5 @@
 /shell/zookeeper.out
 /shell/nohup.out
 .DS_Store
+**/nodes.conf
+**/dump.rdb
