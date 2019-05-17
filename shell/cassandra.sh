@@ -1,11 +1,15 @@
 #!/bin/sh
+# mkdir <cassandra-home>/logs
+# mkdir -p <cassandra-home>/data/data
+# chown -R <user>:<group> logs
+# chown -R <user>:<group> data
 # start local cassandra in the foreground/background
-# /Users/tools/cassandra/bin/cassandra -f
-/Users/tools/cassandra/bin/cassandra
-/Users/tools/cassandra/bin/cassandra -v
+# <cassandra-home>/bin/cassandra -f
+<cassandra-home>/bin/cassandra
+<cassandra-home>/bin/cassandra -v
 
 # query cassandra status
-/Users/tools/cassandra/bin/nodetool status
+<cassandra-home>/bin/nodetool status
 
 # cqlsh
 cqlsh localhost port [-u username -p password]
@@ -59,7 +63,7 @@ scutil --set HostName XXX
 echo "127.0.0.1 XXX" >> /etc/hosts
 
 # start cassandra cluster by ccm
-# /Users/colddew/.ccm
+# ~/.ccm
 # ccm create test -v 2.2.8 -n 3 -s
 # ccm create test --install-dir=<path/to/cassandra-sources>
 ccm invalidatecache
