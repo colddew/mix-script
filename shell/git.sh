@@ -68,3 +68,7 @@ git config user.email "colddew@example.com"
 git push -u origin --all
 git push -u origin --tags
 
+# tag
+git tag <tag-name>
+git tag
+git push origin <tag-name>
