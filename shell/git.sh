@@ -71,4 +71,7 @@ git push -u origin --tags
 # tag
 git tag <tag-name>
 git tag
+# git tag -d <tag-name>
 git push origin <tag-name>
+git push origin -–tags
+git checkout <tag-name>
