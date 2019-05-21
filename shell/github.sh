@@ -54,6 +54,7 @@
 </scm>
 
 # publish package to your GitHub Package Registry
+# mvn deploy -Dregistry=https://maven.pkg.github.com/OWNER -Dtoken=$GH_TOKEN
 mvn deploy
 
 # access package
@@ -74,3 +75,8 @@ mvn install
 curl -H "Authorization: Bearer TOKEN" -X DELETE https://maven.pkg.github.com/OWNER/com/example/PACKAGE NAME/VERSION
 
 # GitHub Docker Package Registry
+docker login docker.pkg.github.com -u USERNAME -p PASSWORD/TOKEN
+docker tag IMAGE_ID docker.pkg.github.com/OWNER/REPOSITORY/IMAGE_NAME:VERSION
+docker push docker.pkg.github.com/OWNER/REPOSITORY/IMAGE_NAME:VERSION
+# https://github.com/OWNER/REPOSITORY/packages
+docker pull docker.pkg.github.com/OWNER/REPOSITORY/IMAGE_NAME:TAG_NAME
