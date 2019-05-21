@@ -68,6 +68,18 @@ jstack -m <pid>
 jstack -F <pid>
 jcmd
 
+# CPU 100% & Full GC problem
+# check cpu and thread
+top -Hp <pid> 
+# convert thread id to hex
+# printf "%x\n" 10
+# user thread
+jstack <pid>
+# vm thread
+jstat -gcutil <pid> <period> <times>
+jmap dump:format=b,file=<filepath> <pid>
+mat
+
 # common used
 chown -R colddew[:admin] <path>
 chgrp -R admin <path>
