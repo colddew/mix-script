@@ -102,3 +102,7 @@ ls -l | grep "^d" | wc -l
 ls -lR | grep "^-" | wc -l
 # count folder quantity under all path
 ls -lR | grep "^d" | wc -l
+
+# modify created time of file
+GetFileInfo <file-name>
+Setfile -d "06/01/2019 01:00:00" <file-name>
