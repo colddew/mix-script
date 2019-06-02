@@ -4,9 +4,9 @@
 nohup /usr/local/mongodb/bin/mongod --dbpath /usr/local/mongodb/data &
 
 # mongo cluster
-
 # replica sets
 /usr/local/bin/mongod --dbpath /usr/local/var/mongodb --replSet repset
+# login any mongodb
 mongo --host <mongo-host> --port <mongo-port>
 config = { _id:"repset", members:[
   {_id:0,host:"<mongo-host-1>:<mongo-port>"},
