@@ -94,6 +94,13 @@ sort [-ntkr] <file-name>
 # cat uniq.txt | sort | uniq
 diff -r <first-file> <second-file> | diffstat
 
+# conditional lookup
+du -s * | sort -nr | head
+du --max-depth=1
+find / -size +204800
+find ./ -size +2048c -type f
+find ./ -size -2048c
+
 # count file quantity under current path
 ls -l | grep "^-" | wc -l
 # count folder quantity under current path
