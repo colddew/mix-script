@@ -95,11 +95,16 @@ sort [-ntkr] <file-name>
 diff -r <first-file> <second-file> | diffstat
 
 # conditional lookup
-du -s * | sort -nr | head
+du -sh * | sort -nr | head
 du --max-depth=1
 find / -size +204800
 find ./ -size +2048c -type f
 find ./ -size -2048c
+
+# read large file
+head -10000 /var/lib/mysql/slowquery.log > temp.log
+tail -10000 /var/lib/mysql/slowquery.log > temp.log
+sed -n '10,10000p' /var/lib/mysql/slowquery.log > temp.log
 
 # count file quantity under current path
 ls -l | grep "^-" | wc -l
