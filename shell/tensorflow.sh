@@ -62,10 +62,18 @@ print(C)
 curl -O http://download.tensorflow.org/example_images/flower_photos.tgz
 tensorboard --logdir /tmp/retrain_logs
 curl -LO https://github.com/tensorflow/hub/raw/master/examples/image_retraining/retrain.py
+
 python ~/tensorflow/example/retrain.py --image_dir ~/tensorflow/flower_photos
+# python ~/tensorflow/example/retrain.py --image_dir ~/Downloads/pic/succulent-train-final --print_misclassified_test_images
+# python ~/tensorflow/example/retrain.py --image_dir ~/tensorflow/flower_photos --random_crop 5 --random_scale 5 --random_brightness 5
 
 curl -LO https://github.com/tensorflow/tensorflow/raw/master/tensorflow/examples/label_image/label_image.py
-python ~/tensorflow/example/label_image.py --graph=/tmp/output_graph.pb --labels=/tmp/output_labels.txt --input_layer=Placeholder --output_layer=final_result --image=$HOME/Downloads/pic_temp/1.jpg
+python ~/tensorflow/example/label_image.py \
+--graph=/tmp/output_graph.pb \
+--labels=/tmp/output_labels.txt \
+--input_layer=Placeholder \
+--output_layer=final_result \
+--image=$HOME/Downloads/pic_temp/1.jpg
 
 
 # install tensorflow from docker
@@ -80,3 +88,12 @@ docker run -it --rm tensorflow/tensorflow python -c "import tensorflow as tf; pr
 docker run -it tensorflow/tensorflow bash
 # To run a TensorFlow program developed on the host machine within a container, mount the host directory and change the container's working directory
 docker run -it --rm -v $PWD:/tmp -w /tmp tensorflow/tensorflow python <command>.py
+
+# clean temp workdir
+pkill -f "tensorboard"
+rm _retrain_checkpoint*
+rm checkpoint
+rm output_graph.pb
+rm output_labels.txt
+rm -rf bottleneck
+rm -rf retrain_logs
