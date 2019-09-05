@@ -6,6 +6,10 @@ import requests
 from keras.preprocessing import image
 from keras.applications import inception_v3
 
+# pip install pillow
+# pip install keras_applications
+# pip install keras_preprocessing
+
 # Argument parser for giving input image_path from command line
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=True,

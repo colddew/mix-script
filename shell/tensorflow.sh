@@ -63,19 +63,22 @@ curl -O http://download.tensorflow.org/example_images/flower_photos.tgz
 tensorboard --logdir /tmp/retrain_logs
 curl -LO https://github.com/tensorflow/hub/raw/master/examples/image_retraining/retrain.py
 
-python ~/tensorflow/example/retrain.py --image_dir ~/tensorflow/flower_photos
-python ~/tensorflow/example/retrain.py --image_dir ~/Downloads/pic/succulent-train-new --print_misclassified_test_images --saved_model_dir=/tmp/saved_models/$(date +%s)
-# python ~/tensorflow/example/retrain.py --image_dir ~/Downloads/pic/succulent-train-new --print_misclassified_test_images
-# python ~/tensorflow/example/retrain.py --image_dir ~/tensorflow/flower_photos --random_crop 5 --random_scale 5 --random_brightness 5
+python ~/script/shell/tensorflow/retrain.py --image_dir ~/tensorflow/flower_photos
+python ~/script/shell/tensorflow/retrain.py --image_dir ~/Downloads/pic/succulent-train-new --print_misclassified_test_images --saved_model_dir=/tmp/saved_models/$(date +%s)
+# python ~/script/shell/tensorflow/retrain.py --image_dir ~/Downloads/pic/succulent-train-new --print_misclassified_test_images
+# python ~/script/shell/tensorflow/retrain.py --image_dir ~/tensorflow/flower_photos --random_crop 5 --random_scale 5 --random_brightness 5
 
 curl -LO https://github.com/tensorflow/tensorflow/raw/master/tensorflow/examples/label_image/label_image.py
-python ~/tensorflow/example/label_image.py \
+python ~/script/shell/tensorflow/label_image.py \
 --graph=/tmp/output_graph.pb \
 --labels=/tmp/output_labels.txt \
 --input_layer=Placeholder \
 --output_layer=final_result \
 --image=$HOME/Downloads/pic_temp/555.jpg
 
+# saved model
+saved_model_cli show --dir /tmp/<models>/<version>/ --all
+saved_model_cli show --dir . --tag_set serve --signature_def serving_default
 
 # install tensorflow from docker
 docker pull tensorflow/tensorflow

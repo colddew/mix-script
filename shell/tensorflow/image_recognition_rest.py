@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     '--image_path',
     type=str,
-    default='/Users/anmy/Downloads/pic_temp/555.jpg',
+    default='~/Downloads/pic_temp/555.jpg',
     help='path of image'
 )
 
