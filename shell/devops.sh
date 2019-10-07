@@ -118,3 +118,8 @@ ls -lR | grep "^d" | wc -l
 # modify created time of file
 GetFileInfo <file-name>
 Setfile -d "06/01/2019 01:00:00" <file-name>
+
+# query port by pid
+netstat -nap | grep <pid>
+# query process by port
+netstat -tunlp | grep <port>
