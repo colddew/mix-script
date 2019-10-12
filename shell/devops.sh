@@ -123,3 +123,7 @@ Setfile -d "06/01/2019 01:00:00" <file-name>
 netstat -nap | grep <pid>
 # query process by port
 netstat -tunlp | grep <port>
+
+# SecureCRT upload & download
+rz
+sz
