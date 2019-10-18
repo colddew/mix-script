@@ -6,7 +6,7 @@ cd redis-5.0.5
 make
 
 # start stand-alone in 6379 port
-# nohup <redis-home>/src/redis-server &
+# nohup <redis-home>/src/redis-server [redis.conf] &
 
 # config cluster
 # config cluster redis.conf
