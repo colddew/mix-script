@@ -97,6 +97,7 @@ diff -r <first-file> <second-file> | diffstat
 # conditional lookup
 du -sh * | sort -nr | head
 du --max-depth=1
+du -lh --max-depth=1
 find / -size +204800
 find ./ -size +2048c -type f
 find ./ -size -2048c
@@ -125,5 +126,7 @@ netstat -nap | grep <pid>
 netstat -tunlp | grep <port>
 
 # SecureCRT upload & download
+# server receive & send
+yum -y install lrzsz
 rz
 sz
