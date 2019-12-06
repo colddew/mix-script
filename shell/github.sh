@@ -80,3 +80,12 @@ docker tag IMAGE_ID docker.pkg.github.com/OWNER/REPOSITORY/IMAGE_NAME:VERSION
 docker push docker.pkg.github.com/OWNER/REPOSITORY/IMAGE_NAME:VERSION
 # https://github.com/OWNER/REPOSITORY/packages
 docker pull docker.pkg.github.com/OWNER/REPOSITORY/IMAGE_NAME:TAG_NAME
+
+# hosts
+# https://www.ipaddress.com/
+140.82.114.3       github.com
+199.232.5.194      github.global.ssl.fastly.net
+185.199.108.153    assets-cdn.github.com
+
+# refresh dns
+sudo killall -HUP mDNSResponder
