@@ -12,6 +12,7 @@ mv nginx-1.17.7 /usr/local
 ln -s nginx-1.17.7 nginx
 ./configure
 make & make install
+mkdir logs
 
 # start & stop
 #!/bin/sh
