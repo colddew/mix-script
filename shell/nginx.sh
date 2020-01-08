@@ -16,6 +16,7 @@ mkdir logs
 
 # start & stop
 #!/bin/sh
+whereis nginx
 /usr/local/nginx/sbin/nginx           # start  
 /usr/local/nginx/sbin/nginx -t        # test config
 /usr/local/nginx/sbin/nginx -v        # show version
@@ -26,3 +27,8 @@ mkdir logs
 # firewall
 # firewall-cmd --zone=public --add-port=80/tcp --permanent
 # firewall-cmd --reload
+
+# start with ECS# firewall-cmd --zone=public --add-port=80/tcp --permanent
+vi /etc/rc.local
+# /usr/local/nginx/sbin/nginx
+chmod 755 rc.local
