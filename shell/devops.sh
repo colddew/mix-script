@@ -98,6 +98,7 @@ diff -r <first-file> <second-file> | diffstat
 du -sh * | sort -nr | head
 du --max-depth=1
 du -lh --max-depth=1
+du -h --max-depth=1 / 
 find / -size +204800
 find ./ -size +2048c -type f
 find ./ -size -2048c
