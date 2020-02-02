@@ -20,6 +20,7 @@ git add .
 git commit -am "branch-pr log"
 git checkout master
 git merge branch-pr
+// git merge --no-ff branch-pr
 git push origin master
 
 # rollback last/designated commit
