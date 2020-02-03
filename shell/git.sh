@@ -76,3 +76,10 @@ git tag
 git push origin <tag-name>
 git push origin -–tags
 git checkout <tag-name>
+
+# stash
+git stash
+git stash pop
+
+# cherry pick
+git cherry-pick –n <commit-hash>
