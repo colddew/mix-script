@@ -63,3 +63,6 @@ set foo bar
 get foo
 setex foo 30 bar
 del foo
+
+# redis lock
+SET lock-key "" EX 10 NX
