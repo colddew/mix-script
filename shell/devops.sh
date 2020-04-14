@@ -14,9 +14,14 @@ curl -x <proxy-ip>:<proxy-port> www.baidu.com
 
 # format directory
 tree
+tree -a
+tree -L 3
+tree d
+tree tree -P '*Contain*' --prune
+tree -I '*NotContain*' --prune
 
 # format json
-jq
+echo '' | jq .
 
 # unicode encode/decode
 native2ascii
