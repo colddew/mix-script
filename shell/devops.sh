@@ -136,3 +136,6 @@ netstat -tunlp | grep <port>
 yum -y install lrzsz
 rz
 sz
+
+# modify file datetime
+touch -mt 201909052248 <filename>
