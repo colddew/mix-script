@@ -139,3 +139,8 @@ sz
 
 # modify file datetime
 touch -mt 201909052248 <filename>
+
+# awk
+awk '{print $4}' <log-file-name>.log | sort | uniq -c | sort -nr | head -n 10
+cat <log-file-name>.log | awk '{print $(NF-2)}' | sort | uniq -c | sort -nr | head -n 10
+netstat -tun | grep 6379 | awk '{print $5}' | awk -F':' '{print $1}' | sort | uniq -c
