@@ -66,3 +66,13 @@ del foo
 
 # redis lock
 SET lock-key "" EX 10 NX
+
+# solve more than max connection count question
+ss | grep 6379 | wc -l
+info clients
+client list
+config get maxclients
+config get timeout
+config get tcp-keepalive
+config set tcp-keepalive 60
+config set timeout 300
