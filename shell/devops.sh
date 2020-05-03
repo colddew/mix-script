@@ -58,9 +58,13 @@ badblocks -v <partition-device>
 
 # monitor
 lsof -i tcp:port
+yum install -y dstat
 dstat 5
 dstat --top-mem --top-io --top-cpu
-mtr
+yum install -y mtr
+mtr -v
+top -n <refresh-times>
+top -Hp <pid>
 
 # tuning
 jps
@@ -107,6 +111,7 @@ du -h --max-depth=1 /
 find / -size +204800
 find ./ -size +2048c -type f
 find ./ -size -2048c
+find -type f | wc -l
 
 # read large file
 head -10000 /var/lib/mysql/slowquery.log > temp.log
