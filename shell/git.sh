@@ -83,3 +83,6 @@ git stash pop
 
 # cherry pick
 git cherry-pick –n <commit-hash>
+
+# clean repository
+find ~/.m2/repository -name "*lastUpdated*" | xargs rm -fr
