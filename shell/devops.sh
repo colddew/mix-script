@@ -27,9 +27,21 @@ echo '' | jq .
 echo '' | base64
 echo '' | base64 -D
 
+# hash
+echo '' | md5
+echo '' | shasum
+# echo '' | openssl sha1
+echo '' | shasum -a 256
+# echo '' | openssl dgst -sha256
+# alias sha256="openssl dgst -sha256"
+
 # unicode encode/decode
 native2ascii
 native2ascii -reverse
+
+# urlencode/urldecode
+alias urldecode='python -c "import sys, urllib as ul; print ul.unquote_plus(sys.argv[1])"'
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])"'
 
 # ngrok
 ~/Downloads/ngrok http 8888
