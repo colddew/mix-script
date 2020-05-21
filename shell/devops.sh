@@ -23,6 +23,10 @@ tree -I '*NotContain*' --prune
 # format json
 echo '' | jq .
 
+# base64
+echo '' | base64
+echo '' | base64 -D
+
 # unicode encode/decode
 native2ascii
 native2ascii -reverse
