@@ -174,3 +174,35 @@ mv x.x.x.x_id_rsa.pub root@<remote-ip>:/root
 # remote machine
 cd ~/.ssh
 cat x.x.x.x_id_rsa.pub >> authorized_keys
+
+# logrotate
+# /etc/cron.daily/logrotate
+#  /etc/logrotate.d/
+# /usr/sbin/logrotate -vf /etc/logrotate.d/nginx
+
+/usr/local/nginx/logs/www.wogoo.log
+/usr/local/nginx/logs/api.wogoo.log
+# /usr/local/nginx/logs/access.log
+# /usr/local/nginx/logs/error.log
+{
+    # create 0644 nginx nginx
+    daily
+    rotate 30
+    missingok
+    dateext
+    notifempty
+    compress
+    # delaycompress
+    sharedscripts
+    postrotate
+        /bin/kill -USR1 `cat /usr/local/nginx/logs/nginx.pid 2>/dev/null` 2>/dev/null || true
+
+        # [ -e /usr/local/nginx/logs/nginx.pid ] && kill -USR1 `cat /usr/local/nginx/logs/nginx.pid`
+
+        # if [ -f /var/run/nginx.pid ]; then
+        #     kill -USR1 `cat /var/run/nginx.pid`
+        # fi
+    endscript
+}
+
+
