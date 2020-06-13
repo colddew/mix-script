@@ -127,6 +127,7 @@ du -h --max-depth=1 /
 find / -size +204800
 find ./ -size +2048c -type f
 find ./ -size -2048c
+find ./ -size +100M -type f
 find -type f | wc -l
 
 # read large file
@@ -165,3 +166,11 @@ touch -mt 201909052248 <filename>
 awk '{print $4}' <log-file-name>.log | sort | uniq -c | sort -nr | head -n 10
 cat <log-file-name>.log | awk '{print $(NF-2)}' | sort | uniq -c | sort -nr | head -n 10
 netstat -tun | grep 6379 | awk '{print $5}' | awk -F':' '{print $1}' | sort | uniq -c
+
+# ssh
+ssh-keygen -t rsa
+mv id_rsa.pub x.x.x.x_id_rsa.pub
+mv x.x.x.x_id_rsa.pub root@<remote-ip>:/root
+# remote machine
+cd ~/.ssh
+cat x.x.x.x_id_rsa.pub >> authorized_keys
