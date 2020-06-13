@@ -61,6 +61,10 @@ mvn dependency:tree -Dincludes=<groupId>:<artifactId>
 # calculate gzip compression ratio
 gzip -cv <file-name> > /dev/null
 
+# gzip
+gzip x.txt
+gzip -d x.txt.gz
+
 # file system
 fdisk -l
 fdisk <raw-device>
