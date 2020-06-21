@@ -209,4 +209,5 @@ cat x.x.x.x_id_rsa.pub >> authorized_keys
     endscript
 }
 
-
+# network
+netstat -n | awk '/^tcp/ {++state[$NF]} END {for(key in state) print key,"\t",state[key]}'
