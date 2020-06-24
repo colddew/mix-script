@@ -12,6 +12,8 @@ watch <package.ClassName> <MethodName> returnObj
 watch <package.ClassName> <MethodName> {params,returnObj}
 watch <package.ClassName> <MethodName> {params[0], throwExp} -e
 trace <package.ClassName> <MethodName> '#cost>100'
+stack <package.ClassName> <MethodName>
+monitor -c 3 <package.ClassName> <MethodName>
 tt -t <package.ClassName> <MethodName>
 tt -l
 tt -s 'method.name=="<MethodName>"'

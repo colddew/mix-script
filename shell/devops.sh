@@ -211,3 +211,6 @@ cat x.x.x.x_id_rsa.pub >> authorized_keys
 
 # network
 netstat -n | awk '/^tcp/ {++state[$NF]} END {for(key in state) print key,"\t",state[key]}'
+netstat -an | grep ESTABLISHED | awk '{print $5}'  | awk -F: '{print $1}' | sort | uniq -c | sort -r
+# Active Internet connections (servers and established)
+# Proto Recv-Q Send-Q Local Address           Foreign Address         State   
