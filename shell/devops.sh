@@ -65,6 +65,10 @@ gzip -cv <file-name> > /dev/null
 gzip x.txt
 gzip -d x.txt.gz
 
+# zip
+zip -r x.zip logs/
+unzip x.zip
+
 # file system
 fdisk -l
 fdisk <raw-device>
