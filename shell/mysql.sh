@@ -26,6 +26,22 @@ ALTER TABLE T_Succulent_User CHANGE NickName NickName varchar(128) CHARACTER SET
 # mycli
 mycli <database-name>
 
+# slow query
+/usr/bin/mysql -uroot -p
+SELECT VERSION();
+SHOW VARIABLES LIKE '%slow_query_log%';
+# SET GLOBAL slow_query_log=1;
+SHOW GLOBAL VARIABLES LIKE '%long_query_time%';
+SET GLOBAL long_query_time=1;
+SHOW GLOBAL STATUS LIKE '%Slow_queries%';
+mysqldumpslow -s r -t 10 slow.log
+mysqldumpslow -s t -t 10 -g "left join" slow.log
+# permanent
+# /etc/my.conf
+slow_query_log=ON
+slow_query_log_file=/mysql/slow.log
+long_query_time=1
+
 # deadlock
 show status like '%lock%';
 show processlist;
