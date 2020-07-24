@@ -64,3 +64,8 @@ SELECT CONCAT_WS('','kill',' ',t.trx_mysql_thread_id,';')a FROM information_sche
 -- InnoDB Standard Monitor and Lock Monitor Output
 SHOW ENGINE INNODB STATUS;
 select @@log_error;
+
+# sql_mode
+select @@global.sql_mode;
+-- set @@global.sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+set @@global.sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
