@@ -218,3 +218,8 @@ netstat -n | awk '/^tcp/ {++state[$NF]} END {for(key in state) print key,"\t",st
 netstat -an | grep ESTABLISHED | awk '{print $5}'  | awk -F: '{print $1}' | sort | uniq -c | sort -r
 # Active Internet connections (servers and established)
 # Proto Recv-Q Send-Q Local Address           Foreign Address         State   
+
+# download m3u8 flow file
+brew install ffmpeg
+ffmpeg -i <m3u8-remote-file> <local-file>
+# ffmpeg -i https://1252524126.vod2.myqcloud.com/9764a7a5vodtransgzp1252524126/10f3a1135285890806390518449/drm/v.f230.m3u8 im.mp4
