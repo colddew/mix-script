@@ -76,3 +76,10 @@ config get timeout
 config get tcp-keepalive
 config set tcp-keepalive 60
 config set timeout 300
+
+# batch handler
+#!/bin/sh
+host=$1
+port=$2
+password=$3
+cat command.txt | /path/to/redis-cli -h $host -p $port -a $password --pipe

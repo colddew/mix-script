@@ -25,6 +25,8 @@ whereis nginx
 /usr/local/nginx/sbin/nginx -s reload # restart
 
 # firewall
+firewall-cmd state
+firewall-cmd --list-ports
 # firewall-cmd --zone=public --add-port=80/tcp --permanent
 # firewall-cmd --reload
 
