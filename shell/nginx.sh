@@ -25,10 +25,22 @@ whereis nginx
 /usr/local/nginx/sbin/nginx -s reload # restart
 
 # firewall
+systemctl status firewalld
 firewall-cmd state
+
+service firewalld start
+service firewalld restart
+service firewalld stop
+
+firewall-cmd --list-all
 firewall-cmd --list-ports
+
+firewall-cmd --query-port=8080/tcp
+firewall-cmd --permanent --add-port=80/tcp
+firewall-cmd --permanent --remove-port=8080/tcp
 # firewall-cmd --zone=public --add-port=80/tcp --permanent
-# firewall-cmd --reload
+
+firewall-cmd --reload
 
 # start with ECS# firewall-cmd --zone=public --add-port=80/tcp --permanent
 vi /etc/rc.local
