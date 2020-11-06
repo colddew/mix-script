@@ -70,5 +70,8 @@ nohup /usr/local/kafka/bin/kafka-server-start.sh /usr/local/kafka/config/cluster
 # /usr/local/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --from-beginning --topic test
 /usr/local/kafka/bin/kafka-console-consumer.sh --bootstrap-server 172.17.248.236:9991,172.17.248.236:9992,172.17.248.236:9993 --group legacy --from-beginning --topic test
 
+# query consumer stastics
+/usr/local/kafka/bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list 172.17.248.236:9991,172.17.248.236:9992,172.17.248.236:9993 --topic test --time -1
+
 # delete kafka data
 rm -rf /tmp/kafka-logs /tmp/zookeeper
