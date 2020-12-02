@@ -74,8 +74,15 @@ client list
 config get maxclients
 config get timeout
 config get tcp-keepalive
+config get maxmemory
 config set tcp-keepalive 60
 config set timeout 300
+
+# common command
+info
+dbsize
+flushall
+memory usage <key>
 
 # batch handler
 #!/bin/sh
@@ -83,3 +90,6 @@ host=$1
 port=$2
 password=$3
 cat command.txt | /path/to/redis-cli -h $host -p $port -a $password --pipe
+
+# batch delete
+redis-cli -a xxx keys "feed:rank:*" | xargs redis-cli -a xxx del
