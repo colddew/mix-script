@@ -73,5 +73,9 @@ nohup /usr/local/kafka/bin/kafka-server-start.sh /usr/local/kafka/config/cluster
 # query consumer stastics
 /usr/local/kafka/bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list 172.17.248.236:9991,172.17.248.236:9992,172.17.248.236:9993 --topic test --time -1
 
+# group operation
+# <kafka-home>/bin/kafka-consumer-groups.sh --bootstrap-server 172.17.248.236:9991,172.17.248.236:9992,172.17.248.236:9993 --list
+# <kafka-home>/bin/kafka-consumer-groups.sh --bootstrap-server 172.17.248.236:9991,172.17.248.236:9992,172.17.248.236:9993 --describe --group legacy
+
 # delete kafka data
 rm -rf /tmp/kafka-logs /tmp/zookeeper

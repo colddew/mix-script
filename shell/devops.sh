@@ -12,6 +12,9 @@ curl -i -F 'image=@3.jpg' 'http://image.baidu.com/pictureup/uploadshitu?pos=uplo
 # access through proxy server
 curl -x <proxy-ip>:<proxy-port> www.baidu.com
 
+# batch http get
+for i in {1..100};do curl -X GET https://url -H "X-User-ID: userId" -H "X-Device-NO: deviceNo" -H "Authorization: auth";done;
+
 # format directory
 tree
 tree -a
@@ -160,6 +163,10 @@ Setfile -d "06/01/2019 01:00:00" <file-name>
 netstat -nap | grep <pid>
 # query process by port
 netstat -tunlp | grep <port>
+# query process command
+lsof -i:<port>
+ll /proc/<pid>
+cat /proc/<pid>/cmdline
 
 # SecureCRT upload & download
 # server receive & send

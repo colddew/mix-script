@@ -82,7 +82,9 @@ config set timeout 300
 info
 dbsize
 flushall
+flushdb
 memory usage <key>
+select <database>
 
 # batch handler
 #!/bin/sh

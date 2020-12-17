@@ -26,7 +26,7 @@ whereis nginx
 
 # firewall
 systemctl status firewalld
-firewall-cmd state
+firewall-cmd --state
 
 service firewalld start
 service firewalld restart
