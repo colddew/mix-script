@@ -95,3 +95,4 @@ cat command.txt | /path/to/redis-cli -h $host -p $port -a $password --pipe
 
 # batch delete
 redis-cli -a xxx keys "feed:rank:*" | xargs redis-cli -a xxx del
+./redis-cli -a <password> -n <db> keys "feed:count:stockChart*" | xargs ./redis-cli -a <password> -n <db> del

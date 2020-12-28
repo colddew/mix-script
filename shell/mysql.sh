@@ -69,3 +69,18 @@ select @@log_error;
 select @@global.sql_mode;
 -- set @@global.sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 set @@global.sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+
+# binlog
+show variables like 'binlog_format';
+# cat /mysql/path/my.cnf
+show variables like 'log_bin';
+# set sql_log_bin=1
+# set sql_log_bin=0
+show binary logs;
+show master status;
+show master logs;
+show binlog events;
+show binlog events in <binlog-name>;
+show variables like 'expire_logs_days';
+# set global expire_logs_days=7;
+# flush logs;
