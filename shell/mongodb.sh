@@ -18,11 +18,25 @@ rs.status();
 db.getMongo().setSlaveOk();
 rs.conf();
 
+# mongodb 4.4.2
+# installation
+mongod --dbpath /usr/local/mongodb/data --logpath /usr/local/mongodb/logs/mongo.log --fork
+# mongobooster
+# https://cloud.mongodb.com/v2
+# Atlas & Charts
+
 # monitor
 /usr/local/bin/mongostat --host=<mongo-server-ip> --port=27017 5
 
 # query
 db.contactUserPhones.find({"createTime":{"$lt": new Date("2016-01-01T00:00:00.000+08:00")}}).count()
+
+# query criteria
+# fuzzy query
+{"name":{"$regex":"n1"}}
+# sort
+{"password":1}
+{"password":-1}
 
 # export
 mongoexport --host=127.0.0.1 --port=27017 -d db -c collection -o out.txt -q '{createTime:{$gte: new Date("2016-01-01T00:00:00.000+08:00"), $lt: new Date("2016-01-02T00:00:00.000+08:00")}}' -k --sort={"_id":1}
@@ -39,3 +53,6 @@ db.<collection>.count();
 db.<collection>.find({});
 db.currentOP();
 db.version();
+
+# compass client
+mongodb+srv://videostorm:<password>@cluster0.grwog.mongodb.net/test
