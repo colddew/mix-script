@@ -71,8 +71,13 @@ select @@global.sql_mode;
 set @@global.sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 
 # binlog
-show variables like 'binlog_format';
 # cat /mysql/path/my.cnf
+# [mysqld]
+# log-bin=mysql-bin
+# binlog-format=ROW
+# server_id=1
+mysqlbinlog --no-defaults mysql-bin.000001
+show variables like 'binlog_format';
 show variables like 'log_bin';
 # set sql_log_bin=1
 # set sql_log_bin=0
@@ -84,3 +89,14 @@ show binlog events in <binlog-name>;
 show variables like 'expire_logs_days';
 # set global expire_logs_days=7;
 # flush logs;
+
+# yum install mysql 5.7 on centos 7
+service mysqld start
+service mysqld stop
+service mysqld restart
+service mysqld status
+cat /etc/my.cnf
+# datadir=/var/lib/mysql
+# socket=/var/lib/mysql/mysql.sock
+# log-error=/var/log/mysqld.log
+# pid-file=/var/run/mysqld/mysqld.pid

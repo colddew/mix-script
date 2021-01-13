@@ -12,6 +12,12 @@ curl -i -F 'image=@3.jpg' 'http://image.baidu.com/pictureup/uploadshitu?pos=uplo
 # access through proxy server
 curl -x <proxy-ip>:<proxy-port> www.baidu.com
 
+# query network latency
+curl -L --output /dev/null --silent --show-error --write-out 'lookup: %{time_namelookup}\nconnect:%{time_connect}\nappconnect:%{time_appconnect}\npretransfer:%{time_pretransfer}\nredirect:%{time_redirect}\nstarttransfer: %{time_starttransfer}\ntotal:%{time_total}\n' 'https://appleid.apple.com/auth/keys'
+
+# network trace
+mtr —no-dns appleid.apple.com
+
 # batch http get
 for i in {1..100};do curl -X GET https://url -H "X-User-ID: userId" -H "X-Device-NO: deviceNo" -H "Authorization: auth";done;
 
