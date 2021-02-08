@@ -188,6 +188,9 @@ awk '{print $4}' <log-file-name>.log | sort | uniq -c | sort -nr | head -n 10
 cat <log-file-name>.log | awk '{print $(NF-2)}' | sort | uniq -c | sort -nr | head -n 10
 netstat -tun | grep 6379 | awk '{print $5}' | awk -F':' '{print $1}' | sort | uniq -c
 
+# http code statistics
+zcat log.gz | awk '{if($11 == 400 && $10 ~ /.*systemType\\":\\"1.*/)  {print "android"} else if ($11 == 400 && $10 ~ /.*systemType\\":2.*/) {print "ios"} else if ($11 == 400 && $10 ~ /.*systemType\\":3.*/) {print "web"} }' | awk '{sum[$1]+=1} END { for(i in sum) print i"\t"sum[i] }'
+
 # ssh
 ssh-keygen -t rsa
 mv id_rsa.pub x.x.x.x_id_rsa.pub
