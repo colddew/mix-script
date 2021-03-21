@@ -98,6 +98,8 @@ yum install -y mtr
 mtr -v
 top -n <refresh-times>
 top -Hp <pid>
+# P order by CPU
+# M order by memory
 
 # tuning
 jps
@@ -109,6 +111,12 @@ jstack -l <pid>
 jstack -m <pid>
 jstack -F <pid>
 jcmd
+jinfo
+
+# gc
+# http://gceasy.io/
+# https://fastthread.io/
+# -Xloggc:/opt/atlassian/jira/logs/atlassian-jira-gc-%t.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=20M -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+PrintGCCause
 
 # CPU 100% & Full GC problem
 # check cpu and thread
@@ -116,10 +124,10 @@ top -Hp <pid>
 # convert thread id to hex
 # printf "%x\n" 10
 # user thread
-jstack <pid>
+jstack -l <pid> >> jstack.log
 # vm thread
 jstat -gcutil <pid> <period> <times>
-jmap dump:format=b,file=<filepath> <pid>
+jmap dump:format=b,file=<heap.hprof> <pid>
 mat
 
 # common used
@@ -239,3 +247,7 @@ netstat -an | grep ESTABLISHED | awk '{print $5}'  | awk -F: '{print $1}' | sort
 brew install ffmpeg
 ffmpeg -i <m3u8-remote-file> <local-file>
 # ffmpeg -i https://1252524126.vod2.myqcloud.com/9764a7a5vodtransgzp1252524126/10f3a1135285890806390518449/drm/v.f230.m3u8 im.mp4
+
+# query binary
+vi -b <file>
+:%!xxd
