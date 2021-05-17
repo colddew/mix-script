@@ -102,21 +102,28 @@ top -Hp <pid>
 # M order by memory
 
 # tuning
-jps
-jstat -gcutil <pid> [cycle]
+jps -lmvV
+# gc
+jstat -gcutil <pid> [interval][ms/s] [count]
+# heap dump
 jmap -heap <pid>
 jmap -histo:live <pid>
-jmap -dump:file=<dump-file>,format=b <pid>
+jmap -dump:file=<dump.hprof>,format=b <pid>
+jmap -dump:live=<dump.hprof>,format=b <pid>
+jmap -heap <pid>
+# thread snapshot
 jstack -l <pid>
 jstack -m <pid>
 jstack -F <pid>
 jcmd
-jinfo
+jinfo -flags <pid>
+jinfo -sysprops <pid>
 
 # gc
 # http://gceasy.io/
 # https://fastthread.io/
 # -Xloggc:/opt/atlassian/jira/logs/atlassian-jira-gc-%t.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=20M -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCTimeStamps -XX:+PrintGCCause
+# -XX:HeapDumpPath=/temp/dumps.bin -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDetails  -XX:+PrintGCDateStamps  -XX:+PrintGCApplicationConcurrentTime -XX:+PrintGCApplicationStoppedTime
 
 # CPU 100% & Full GC problem
 # check cpu and thread

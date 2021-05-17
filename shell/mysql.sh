@@ -62,8 +62,9 @@ SELECT CONCAT_WS('','kill',' ',t.trx_mysql_thread_id,';')a FROM information_sche
 -- kill <trx_mysql_thread_id>
 
 -- InnoDB Standard Monitor and Lock Monitor Output
-SHOW ENGINE INNODB STATUS;
+show engine innodb status;
 select @@log_error;
+show warnings;
 
 # sql_mode
 select @@global.sql_mode;
