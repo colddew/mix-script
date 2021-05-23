@@ -101,3 +101,11 @@ cat /etc/my.cnf
 # socket=/var/lib/mysql/mysql.sock
 # log-error=/var/log/mysqld.log
 # pid-file=/var/run/mysqld/mysqld.pid
+
+# export sql
+mysqldump [-h <host>] -u root -p > <export>.sql
+# import sql
+mysql> source <import.sql>
+mysql> select now() into outfile <import.sql>
+mysql -u root -p -e "source <import.sql>"
+mysql [-h <host>] -u root -p <databases> < <import.sql> > import.log

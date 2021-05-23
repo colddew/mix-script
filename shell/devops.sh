@@ -144,6 +144,7 @@ ulimit -a
 find / -name <file-name>
 tar -zcvf <zip-file-name>.tar.gz <zip-path>
 tar -zxvf <zip-file-name>.tar.gz
+tar tvf <zip-file-name>.tar.gz
 df -h
 du -h .
 grep [-ivnc] '<search-content>' <file-name>
