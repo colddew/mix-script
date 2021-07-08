@@ -211,7 +211,7 @@ zcat log.gz | awk '{if($11 == 400 && $10 ~ /.*systemType\\":\\"1.*/)  {print "an
 ssh-keygen -t rsa
 mv id_rsa.pub x.x.x.x_id_rsa.pub
 mv x.x.x.x_id_rsa.pub root@<remote-ip>:/root
-# remote machine
+# access remote machine
 cd ~/.ssh
 cat x.x.x.x_id_rsa.pub >> authorized_keys
 

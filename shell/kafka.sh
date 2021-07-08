@@ -79,3 +79,10 @@ nohup /usr/local/kafka/bin/kafka-server-start.sh /usr/local/kafka/config/cluster
 
 # delete kafka data
 rm -rf /tmp/kafka-logs /tmp/zookeeper
+
+# reset offsets
+/usr/local/kafka/bin/kafka-consumer-groups.sh --bootstrap-server 172.17.248.236:9991,172.17.248.236:9992,172.17.248.236:9993 --group legacy --describe
+/usr/local/kafka/bin/kafka-consumer-groups.sh --bootstrap-server 172.17.248.236:9991,172.17.248.236:9992,172.17.248.236:9993 --group legacy --topic test --reset-offsets --to-earliest –execute
+/usr/local/kafka/bin/kafka-consumer-groups.sh --bootstrap-server 172.17.248.236:9991,172.17.248.236:9992,172.17.248.236:9993 --group legacy --topic test --reset-offsets --to-offset <offset> –execute
+/usr/local/kafka/bin/kafka-consumer-groups.sh --bootstrap-server 172.17.248.236:9991,172.17.248.236:9992,172.17.248.236:9993 --group legacy --topic test[:partition] --reset-offsets --to-offset <offset> –execute
+/usr/local/kafka/bin/kafka-consumer-groups.sh --bootstrap-server 172.17.248.236:9991,172.17.248.236:9992,172.17.248.236:9993 --group legacy --topic test --reset-offsets --to-latest --execute
