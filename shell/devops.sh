@@ -259,3 +259,16 @@ ffmpeg -i <m3u8-remote-file> <local-file>
 # query binary
 vi -b <file>
 :%!xxd
+
+# fly over the GFW
+brew install privoxy
+vi /usr/local/etc/privoxy/config
+# listen-address 0.0.0.0:8118
+# forward-socks5 / localhost:1080 .
+sudo /usr/local/sbin/privoxy /usr/local/etc/privoxy/config
+netstat -na | grep 8118
+export http_proxy='http://localhost:8118'
+export https_proxy='http://localhost:8118'
+# curl ip.gs
+unset http_proxy
+unset https_proxy

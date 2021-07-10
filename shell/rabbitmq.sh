@@ -1,11 +1,20 @@
 #!/bin/sh
-# start rabbitmq
-/Users/tools/rabbitmq/sbin/rabbitmq-server &
-/Users/tools/rabbitmq/sbin/rabbitmq-server restart &
+# install rabbit on mac
+brew install erlang
+# erl
+brew install rabbitmq
 
-# stop rabbitmq
-ps aux | grep rabbitmq | grep -v grep | awk '{print $2}' | xargs kill -9
+# enable rabbitmq management plugin
+cd /usr/local/Cellar/rabbitmq/3.x.x/
+sudo sbin/rabbitmq-plugins enable rabbitmq_management
 
-# 
-http://127.0.0.1:15672/
-guest/guest
+sudo vi /etc/profile
+export RABBIT_HOME=/usr/local/Cellar/rabbitmq/3.8.0
+export PATH=$PATH:$RABBIT_HOME/sbin
+source /etc/profile
+
+sudo rabbitmq-server -detached
+sudo rabbitmqctl status
+# http://127.0.0.1:15672/
+# guest/guest
+rabbitmqctl stop
