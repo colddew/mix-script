@@ -59,6 +59,7 @@ http://localhost:4040
 
 # dns
 dig @<dns-server-ip> +trace
+nslookup <domain-name>
 
 # stress test
 ab -n 1000 -c 100 -v 2 [-H "<header>"] <url>

@@ -7,6 +7,8 @@ brew install rabbitmq
 # enable rabbitmq management plugin
 cd /usr/local/Cellar/rabbitmq/3.x.x/
 sudo sbin/rabbitmq-plugins enable rabbitmq_management
+sudo sbin/rabbitmq-plugins enable rabbitmq_web_stomp
+sudo sbin/rabbitmq-plugins enable rabbitmq_web_stomp_examples
 
 sudo vi /etc/profile
 export RABBIT_HOME=/usr/local/Cellar/rabbitmq/3.8.0

@@ -45,6 +45,7 @@ long_query_time=1
 # deadlock
 show status like '%lock%';
 show processlist;
+# kill <process-id>
 
 select @@tx_isolation;
 select @@autocommit;
