@@ -13,6 +13,15 @@ ln -s nginx-1.17.7 nginx
 ./configure
 make & make install
 mkdir logs
+nginx -V
+
+# query installed modules
+# cat <nginx-home>/auto/options | grep YES
+
+# dynamic add modules
+./configure –with-stream
+make
+cp objs/nginx /usr/local/nginx/sbin/nginx
 
 # start & stop
 #!/bin/sh

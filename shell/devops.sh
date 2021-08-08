@@ -15,6 +15,9 @@ curl -x <proxy-ip>:<proxy-port> www.baidu.com
 # query network latency
 curl -L --output /dev/null --silent --show-error --write-out 'lookup: %{time_namelookup}\nconnect:%{time_connect}\nappconnect:%{time_appconnect}\npretransfer:%{time_pretransfer}\nredirect:%{time_redirect}\nstarttransfer: %{time_starttransfer}\ntotal:%{time_total}\n' 'https://appleid.apple.com/auth/keys'
 
+# access https url
+curl -v --insecure https://<url>
+
 # network trace
 mtr —no-dns appleid.apple.com
 
@@ -101,6 +104,7 @@ top -n <refresh-times>
 top -Hp <pid>
 # P order by CPU
 # M order by memory
+# c complete command
 
 # tuning
 jps -lmvV
@@ -251,6 +255,9 @@ netstat -n | awk '/^tcp/ {++state[$NF]} END {for(key in state) print key,"\t",st
 netstat -an | grep ESTABLISHED | awk '{print $5}'  | awk -F: '{print $1}' | sort | uniq -c | sort -r
 # Active Internet connections (servers and established)
 # Proto Recv-Q Send-Q Local Address           Foreign Address         State   
+
+# query MTU
+netstat -i
 
 # download m3u8 flow file
 brew install ffmpeg
