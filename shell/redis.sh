@@ -131,3 +131,11 @@ cat command.txt | /path/to/redis-cli -h $host -p $port -a $password --pipe
 # batch delete
 redis-cli -a xxx keys "feed:rank:*" | xargs redis-cli -a xxx del
 ./redis-cli -a <password> -n <db> keys "feed:count:stockChart*" | xargs ./redis-cli -a <password> -n <db> del
+
+# calculate hash slot
+cluster keyslot <key>
+cluster keyslot {hash_tag}
+# redis-memory-for-key -s <ip> -p <port> -a <password> -d 0 <key>
+
+# calculate key length
+MEMORY USAGE <key>

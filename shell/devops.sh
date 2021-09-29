@@ -280,3 +280,11 @@ export https_proxy='http://localhost:8118'
 # curl ip.gs
 unset http_proxy
 unset https_proxy
+
+# query system user
+w
+who
+whoami
+last [user_name]
+# switch user
+su - <user_name>
