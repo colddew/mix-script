@@ -69,7 +69,11 @@ ab -n 1000 -c 100 -v 2 [-H "<header>"] <url>
 
 # maven
 # list jar dependency
-mvn dependency:tree -Dincludes=<groupId>:<artifactId>
+mvn dependency:tree -Dverbose -Dincludes=<groupId>:<artifactId> -Dexcludes=<groupId>:<artifactId>
+# check unused dependency
+mvn dependency:analyze-only
+# clean duplicate dependency
+mvn dependency:analyze-duplicate
 
 # calculate gzip compression ratio
 gzip -cv <file-name> > /dev/null
