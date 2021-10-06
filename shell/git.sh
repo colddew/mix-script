@@ -5,7 +5,18 @@ git config --global user.email 88028842@qq.com
 
 # push code without password
 cd ~/.ssh
-ssh-keygen -t rsa
+# ssh-keygen -t rsa
+ssh-keygen -t rsa -C "xxx@qq.com" -f ~/.ssh/id_rsa_github
+# ssh-keygen -t rsa -C "xxx@qq.com" -f ~/.ssh/id_rsa_gitlab
+# ssh-add -l
+# ssh-add -D
+# ssh-add ~/.ssh/id_rsa_github
+# ssh-add ~/.ssh/id_rsa_gitlab
+vi ~/.ssh/config
+# Host github
+#     HostName github.com
+#     User git
+#     IdentityFile ~/.ssh/id_rsa_github
 # copy id_rsa.pub content to gitlab or github
 
 # branch devlopment
