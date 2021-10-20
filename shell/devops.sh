@@ -292,3 +292,4 @@ whoami
 last [user_name]
 # switch user
 su - <user_name>
+sudo su -

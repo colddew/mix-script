@@ -37,8 +37,8 @@ docker inspect daemon_ubuntu
 # query container ip
 docker inspect --format='{{.NetworkSettings.IPAddress}}' <container-id>
 
-# control + c
-# docker exec -i -t daemon_ubuntu /bin/bash
+# docker exec -it daemon_ubuntu /bin/bash
+# exit 
 docker exec -d daemon_ubuntu touch /tmp/tmp.txt
 docker search puppet
 docker pull ubuntu:12.04
@@ -57,10 +57,11 @@ docker network connect <network> <container-name>
 docker network disconnect <network> <container-name>
 
 docker run hello-world
+# docker run -p <host-port>:<container-port> <repository-name/image-name:tag>
 docker run -d -p 80:80 --name webserver nginx
-# docker run -i -t ubuntu /bin/bash
+# docker run -it ubuntu /bin/bash
 docker run --restart=always --name daemon_ubuntu -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done"
-docker run -i -t ubuntu:12.04 /bin/bash
+docker run -it ubuntu:12.04 /bin/bash
 
 # private docker registry
 # docker run -v host-path:container-path
