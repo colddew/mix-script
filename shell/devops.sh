@@ -14,6 +14,10 @@ curl -x <proxy-ip>:<proxy-port> www.baidu.com
 
 # query network latency
 curl -L --output /dev/null --silent --show-error --write-out 'lookup: %{time_namelookup}\nconnect:%{time_connect}\nappconnect:%{time_appconnect}\npretransfer:%{time_pretransfer}\nredirect:%{time_redirect}\nstarttransfer: %{time_starttransfer}\ntotal:%{time_total}\n' 'https://appleid.apple.com/auth/keys'
+# lookup -> dns
+# pretransfer - lookup -> tcp
+# starttransfer - pretransfer -> server handler
+# total - starttransfer -> content transfer
 
 # access https url
 curl -v --insecure https://<url>
