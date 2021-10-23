@@ -297,3 +297,14 @@ last [user_name]
 # switch user
 su - <user_name>
 sudo su -
+
+# network analyze
+# chrome://net-export/
+nc -l <tcp-port>
+nmap <ip>
+iperf3 -s -i2 -p <port>
+# iptables -I INPUT -p tcp --dport 5001 -j ACCEPT
+tcpdump host <host>
+tcpdump -i eth0 -c 100 -w /tmp/capture.cap
+# most TIME_WAIT ip
+netstat -ptan | grep TIME_WAIT |awk '{print $5}' | awk -F : '{print $1}' | sort | uniq -c | sort -r
