@@ -65,6 +65,9 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 http://localhost:4040
 
 # dns
+# /etc/resolv.conf
+# dig @dnsserver name querytype
+dig @8.8.8.8 www.baidu.com A
 dig @<dns-server-ip> +trace
 nslookup <domain-name>
 
