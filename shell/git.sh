@@ -11,8 +11,8 @@ ssh-keygen -t rsa -C "xxx@qq.com" -f ~/.ssh/id_rsa_github
 # check ssh-key proxy
 ssh-add -l
 # ssh-add -D
-ssh-add ~/.ssh/id_rsa_github
-ssh-add ~/.ssh/id_rsa_gitlab
+ssh-add ~/.ssh/id_rsa_github [&> /dev/null]
+ssh-add ~/.ssh/id_rsa_gitlab [&> /dev/null]
 vi ~/.ssh/config
 # Host github
 #     HostName github.com
