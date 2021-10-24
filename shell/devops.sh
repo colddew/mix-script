@@ -14,6 +14,10 @@ curl -x <proxy-ip>:<proxy-port> www.baidu.com
 
 # query network latency
 curl -L --output /dev/null --silent --show-error --write-out 'lookup: %{time_namelookup}\nconnect:%{time_connect}\nappconnect:%{time_appconnect}\npretransfer:%{time_pretransfer}\nredirect:%{time_redirect}\nstarttransfer: %{time_starttransfer}\ntotal:%{time_total}\n' 'https://appleid.apple.com/auth/keys'
+# lookup -> dns
+# pretransfer - lookup -> tcp
+# starttransfer - pretransfer -> server handler
+# total - starttransfer -> content transfer
 
 # access https url
 curl -v --insecure https://<url>
@@ -61,6 +65,9 @@ alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.ar
 http://localhost:4040
 
 # dns
+# /etc/resolv.conf
+# dig @dnsserver name querytype
+dig @8.8.8.8 www.baidu.com A
 dig @<dns-server-ip> +trace
 nslookup <domain-name>
 
@@ -292,3 +299,15 @@ whoami
 last [user_name]
 # switch user
 su - <user_name>
+sudo su -
+
+# network analyze
+# chrome://net-export/
+nc -l <tcp-port>
+nmap <ip>
+iperf3 -s -i2 -p <port>
+# iptables -I INPUT -p tcp --dport 5001 -j ACCEPT
+tcpdump host <host>
+tcpdump -i eth0 -c 100 -w /tmp/capture.cap
+# most TIME_WAIT ip
+netstat -ptan | grep TIME_WAIT |awk '{print $5}' | awk -F : '{print $1}' | sort | uniq -c | sort -r
