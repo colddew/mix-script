@@ -310,4 +310,4 @@ iperf3 -s -i2 -p <port>
 tcpdump host <host>
 tcpdump -i eth0 -c 100 -w /tmp/capture.cap
 # most TIME_WAIT ip
-netstat -ptan | grep TIME_WAIT |awk '{print $5}' | awk -F : '{print $1}' | sort | uniq -c | sort -r
+netstat -ptan | grep TIME_WAIT | awk '{print $5}' | awk -F : '{print $1}' | sort | uniq -c | sort -r

@@ -139,3 +139,4 @@ cluster keyslot {hash_tag}
 
 # calculate key length
 MEMORY USAGE <key>
+redis-memory-for-key -s <ip> -p <port> -a <password> -d 0 <key>
