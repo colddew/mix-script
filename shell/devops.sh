@@ -150,7 +150,8 @@ top -Hp <pid>
 jstack -l <pid> >> jstack.log
 # vm thread
 jstat -gcutil <pid> <period> <times>
-jmap dump:format=b,file=<heap.hprof> <pid>
+jmap -dump:format=b,file=<heap.hprof> <pid>
+jmap -dump:format=b,file=<heap.bin> <pid>
 mat
 
 # common used
@@ -309,5 +310,6 @@ iperf3 -s -i2 -p <port>
 # iptables -I INPUT -p tcp --dport 5001 -j ACCEPT
 tcpdump host <host>
 tcpdump -i eth0 -c 100 -w /tmp/capture.cap
+# nohup tcpdump -i eth0 -s 256 -C 1024 host 172.30.232.59 and tcp -n -X -w redisTcpDump.cap &
 # most TIME_WAIT ip
 netstat -ptan | grep TIME_WAIT | awk '{print $5}' | awk -F : '{print $1}' | sort | uniq -c | sort -r

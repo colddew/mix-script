@@ -104,8 +104,11 @@ SET lock-key "" EX 10 NX
 
 # solve more than max connection count question
 ss | grep 6379 | wc -l
+# watch -n 1 -d 'netstat -aln | grep 6379 | wc -l'
 info clients
 client list
+# client kill ip:port
+# client kill id <id>
 config get maxclients
 config get timeout
 config get tcp-keepalive
@@ -139,3 +142,6 @@ cluster keyslot {hash_tag}
 
 # calculate key length
 MEMORY USAGE <key>
+
+# slow log
+slowlog get
