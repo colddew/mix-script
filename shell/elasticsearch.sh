@@ -54,6 +54,12 @@ _nodes/stats/jvm
 /Users/tools/logstash/bin/logstash agent -f /Users/tools/logstash/config/logstash_agent.conf --configtest
 /Users/tools/logstash/bin/logstash agent -f /Users/tools/logstash/config/logstash_indexer.conf --configtest
 
+# logtail
+cat /usr/local/ilogtail/ilogtail_config.json
+cat /usr/local/ilogtail/app_info.json
+/etc/init.d/ilogtaild stop && /etc/init.d/ilogtaild start
+/etc/init.d/ilogtaild status
+
 # aliyun logsearch data analysis
 * | select date_format(__time__, '%H:%i') as t, count(1) as pv group by t order by t
 * | select time_series(__time__, '1m', '%H:%i', '0') as t, count(1) as pv group by t order by t
