@@ -1,0 +1,9 @@
+server.host: "0.0.0.0"
+elasticsearch.hosts: ["http://es01:9200","http://es02:9200","http://es03:9200"]
+i18n.locale: zh-CN
+server.publicBaseUrl: https://kibana.wogoo.com
+xpack.monitoring.ui.container.elasticsearch.enabled: true
+xpack.security.enabled: false
+# elasticsearch.username: "elastic"
+# elasticsearch.password: "changeme"
+# xpack.security.encryptionKey: "xxx"

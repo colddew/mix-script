@@ -1,0 +1,112 @@
+version: '2.2'
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    container_name: es01
+    # restart: always
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - xpack.security.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+      #- xpack.license.self_generated.type=basic
+      # /usr/share/elasticsearch/config/jvm.options.d
+      # ES_LOG_STYLE
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+      # Elasticsearch is I/O sensitive and the Docker storage driver is not ideal for fast I/O
+    ports:
+      - 9200:9200
+      # --publish-all
+    networks:
+      - elastic
+  
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    container_name: es02
+    # restart: always
+    environment:
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - xpack.security.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+      #- xpack.license.self_generated.type=basic
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data02:/usr/share/elasticsearch/data
+    networks:
+      - elastic
+  
+  es03:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    container_name: es03
+    # restart: always
+    environment:
+      - node.name=es03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - xpack.security.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+      #- xpack.license.self_generated.type=basic
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data03:/usr/share/elasticsearch/data
+    networks:
+      - elastic
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.16.2
+    container_name: kibana
+    # restart: always
+    ports:
+      - 5601:5601
+    volumes:
+      - /opt/backup/kibana.yml:/usr/share/kibana/config/kibana.yml
+    networks:
+      - elastic
+  
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.16.2
+    container_name: logstash
+    # restart: always
+    ports:
+      - 5044:5044
+    volumes:
+      - /opt/backup/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - /opt/backup/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - /opt/backup/test.log:/opt/backup/test.log
+    networks:
+      - elastic
+
+volumes:
+  data01:
+    driver: local
+  data02:
+    driver: local
+  data03:
+    driver: local
+
+networks:
+  elastic:
+    driver: bridge

@@ -1,0 +1,64 @@
+filebeat.inputs:
+
+- type: filestream
+  enabled: true
+  paths:
+    - /opt/tomcat-9.0.7-server/logs/FH_log/FengYun_Info_
+  tags: ["legacy"]
+  parsers:
+    - multiline:
+        type: pattern
+        pattern: '^\[FH_sys\]'
+        negate: true
+        match: after
+  fields:
+    service_name: legacy
+  fields_under_root: true  
+
+- type: filestream
+  enabled: true
+  paths:
+    - /opt/server-autoTask/logs/FH_log/FengYun_task_Info_
+  tags: ["legacy"]
+  parsers:
+    - multiline:
+        type: pattern
+        pattern: '^\[FH_sys\]'
+        negate: true
+        match: after
+  fields:
+    service_name: task
+  fields_under_root: true
+
+- type: filestream
+  enabled: true
+  paths:
+    - /var/www/logs/chaos-server.log
+  tags: ["microservice"]
+  parsers:
+    - multiline:
+        type: pattern
+        pattern: '^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}'
+        negate: true
+        match: after
+  fields:
+    service_name: chaos
+  fields_under_root: true
+
+- type: filestream
+  enabled: true
+  paths:
+    - /var/www/logs/lancelot-server.log
+  tags: ["microservice"]
+  parsers:
+    - multiline:
+        type: pattern
+        pattern: '^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}'
+        negate: true
+        match: after
+  fields:
+    service_name: lancelot
+  fields_under_root: true
+
+output.logstash:
+  hosts: ["logstash-host:5044"]

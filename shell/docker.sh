@@ -41,6 +41,7 @@ docker stats daemon_ubuntu
 docker inspect daemon_ubuntu
 # query container ip
 docker inspect --format='{{.NetworkSettings.IPAddress}}' <container-id>
+docker cp <container-name>:<container-path> .
 
 # docker exec -it daemon_ubuntu /bin/bash
 # exit 
@@ -190,3 +191,14 @@ kubectl delete namespace harbor
 
 # docker in docker
 docker run --privileged --name docker-in-docker -d docker:dind
+
+# docker compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+docker-compose --version
+# sudo rm /usr/local/bin/docker-compose
+pip uninstall docker-compose
+docker-compose down
+docker-compose up
+docker-compose restart

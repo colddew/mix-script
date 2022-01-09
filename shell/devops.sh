@@ -105,6 +105,7 @@ fsck -t ext3 <partition-device>
 badblocks -v <partition-device>
 
 # monitor
+free -h
 lsof -i tcp:port
 yum install -y dstat
 dstat 5

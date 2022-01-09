@@ -1,66 +1,11 @@
-#!/bin/sh
-# terminology
-Relational DB -> Databases -> Tables -> Rows -> Columns
-Elasticsearch -> Indices   -> Types  -> Documents -> Fields
-
-# start elasticsearch
-/Users/tools/es-cluster/es-node1/bin/elasticsearch -d
-/Users/tools/es-cluster/es-node2/bin/elasticsearch -d
-/Users/tools/es-cluster/es-node3/bin/elasticsearch -d
-
-# shutdown elasticsearch
-# ps aux | grep elasticsearch | grep -v grep | awk '{print $2}' | xargs kill -9
-
-# start kibana
-nohup /Users/tools/kibana/bin/kibana &
-
-# install plugin
-# /Users/tools/es-cluster/es-node1/bin/plugin install mobz/elasticsearch-head
-# http://localhost:9201/_plugin/head/
-
-# /Users/tools/es-cluster/es-node1/bin/plugin install license
-# /Users/tools/es-cluster/es-node1/bin/plugin install marvel-agent
-# /Users/tools/es-cluster/es-node2/bin/plugin install license
-# /Users/tools/es-cluster/es-node2/bin/plugin install marvel-agent
-# /Users/tools/es-cluster/es-node3/bin/plugin install license
-# /Users/tools/es-cluster/es-node3/bin/plugin install marvel-agent
-# /Users/tools/kibana/bin/kibana plugin --install elasticsearch/marvel/2.3.5
-# http://localhost:5601/app/kibana
-# http://localhost:5601/app/marvel
-
-# /Users/tools/es-cluster/es-node1/bin/plugin install elasticsearch/watcher/latest
-# /Users/tools/es-cluster/es-node2/bin/plugin install elasticsearch/watcher/latest
-# /Users/tools/es-cluster/es-node3/bin/plugin install elasticsearch/watcher/latest
-# http://localhost:9201/_watcher/stats?pretty
-
-# /Users/tools/es-cluster/es-node1/bin/plugin install lmenezes/elasticsearch-kopf
-# http://localhost:9201/_plugin/kopf
-
-# useful url
-curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'
-?pretty
-_cluster/health
-_count
-_search?q=last_name:Smith
-_cluster/stats
-_nodes/stats/jvm
-
-# logstash
-# event processing pipeline has three stages: inputs → filters → outputs
-# inputs generate events, filters modify them, and outputs ship them elsewhere
-/Users/tools/logstash/bin/logstash -e 'input { stdin { } } output { stdout {} }'
-/Users/tools/logstash/bin/logstash -e 'input{ stdin { } } output { stdout { codec=>rubydebug } }'
-/Users/tools/logstash/bin/logstash agent -f /Users/tools/logstash/config/logstash.conf --configtest
-/Users/tools/logstash/bin/logstash agent -f /Users/tools/logstash/config/logstash_agent.conf --configtest
-/Users/tools/logstash/bin/logstash agent -f /Users/tools/logstash/config/logstash_indexer.conf --configtest
-
+# aliyun sls
 # logtail
 cat /usr/local/ilogtail/ilogtail_config.json
 cat /usr/local/ilogtail/app_info.json
 /etc/init.d/ilogtaild stop && /etc/init.d/ilogtaild start
 /etc/init.d/ilogtaild status
 
-# aliyun logsearch data analysis
+# logsearch data analysis
 * | select date_format(__time__, '%H:%i') as t, count(1) as pv group by t order by t
 * | select time_series(__time__, '1m', '%H:%i', '0') as t, count(1) as pv group by t order by t
 * | select time_series(__time__, '1m', '%H:%i', 'last') as t, count(1) as pv group by t order by t
