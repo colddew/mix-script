@@ -1,8 +1,13 @@
+# npm uninstall node-gyp -g
+# npm uninstall node-gyp
+# npm install node-gyp -g
+npm uninstall hexo-cli -g
 npm install hexo-cli -g
 hexo init blog
 cd blog
 npm install --no-optional
 hexo s[erver] [-p 8888 -i 192.168.1.1]
+hexo s --debug
 
 hexo new "New Post"
 hexo g[enerate] --watch
