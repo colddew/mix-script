@@ -118,6 +118,8 @@ sudo chown root modules.d/system.yml
 /<filebeat-path>/filebeat -e
 /<filebeat-path>/filebeat -c filebeat.yml -e -d "*"
 /<filebeat-path>/filebeat -e -c filebeat.yml
+nohup /usr/local/filebeat/filebeat -c filebeat.yml 2>&1 &
+# must use exit command to close shell window
 
 # install kibana
 # config/kibana.yml
