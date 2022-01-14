@@ -42,7 +42,7 @@ curl http://localhost:9200/_cat/health
 # /<es-path>/es-cluster/es-node1/bin/plugin install lmenezes/elasticsearch-kopf
 # http://localhost:9201/_plugin/kopf
 
-# useful url
+# useful endpoint
 curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'
 ?pretty
 _cluster/health
@@ -55,13 +55,57 @@ _nodes/stats/jvm
 _cat/nodes
 _template
 _cat/indices?v
+_cat/health
+_cat/heath?help
+_cat/health?h=cluster,pri,relo&v
 
 # analyzer
 # ik
 # pinyin
 elasticsearch-plugin install <analyzer-url>
 
+# set chinese analyzer for text and search keywords
+curl -X PUT 'localhost:9200/accounts' -d '
+{
+  "mappings": {
+    "person": {
+      "properties": {
+        "user": {
+          "type": "text",
+          "analyzer": "ik_max_word",
+          "search_analyzer": "ik_max_word"
+        },
+        "title": {
+          "type": "text",
+          "analyzer": "ik_max_word",
+          "search_analyzer": "ik_max_word"
+        },
+        "desc": {
+          "type": "text",
+          "analyzer": "ik_max_word",
+          "search_analyzer": "ik_max_word"
+        }
+      }
+    }
+  }
+}'
+
 # index curd
+# put is global update, post is partial update
+<index>/<type>/<id> PUT
+<index>/<type> POST
+<index>/<type>/<id>/_update POST
+<index>/<type>/<id> GET
+<index>/<type>/<id> DELETE
+<index> DELETE
+<index>/<type>/_search
+<index>/<type>/<id>/_source
+<index>/_search?pretty&q=<field>:<field-value>
+<index>/<type>/_search?pretty
+# curl -XPOST -H "Content-Type: application/json" http://39.106.229.248:9200/blog/article/_search?pretty -d '{ "query" : {"term" : {"title" : "enhance" }}, "from": 1, "size": 5}'
+# curl -XPOST -H "Content-Type: application/json" http://39.106.229.248:9200/blog/article/_search?pretty -d '{ "query" : {"terms" : {"_id" : [ "3", "5", "7" ] }}}'
+
+curl -XHEAD 'localhost:9200/<index>/user/1?pretty'
 curl -XGET 'localhost:9200/<index>/user/1?pretty'
 curl -XGET 'localhost:9200/<index>/user/_search?q=last_name:ya&pretty'
 
@@ -69,7 +113,8 @@ curl -XPUT  'localhost:9200/<index>/user/1?pretty' -H 'Content-Type: application
 	"first_name": "zhang",
 	"last_name" : "ya",
 	"age" : 18,
-	"about" : "I like to collect rock albums", "interests": [ "music" ]
+	"about" : "I like to collect rock albums",
+        "interests": [ "music" ]
 }'
 
 curl -XPOST 'localhost:9200/<index>/user/1?pretty' -H 'Content-Type: application/json' -d' {
@@ -77,6 +122,24 @@ curl -XPOST 'localhost:9200/<index>/user/1?pretty' -H 'Content-Type: application
 }
 
 curl -XDELETE 'localhost:9200/<index>/user/1?pretty'
+
+# or
+curl 'localhost:9200/accounts/person/_search' -d '{
+  "query" : { "match" : { "desc" : "软件 系统" }}
+}'
+
+# and
+curl 'localhost:9200/accounts/person/_search' -d '{
+  "query": {
+    "bool": {
+      "must": [
+        { "match": { "desc": "软件" } },
+        { "match": { "desc": "系统" } }
+      ]
+    }
+  }
+}'
+
 
 # set index replicas
 curl -XPUT 'localhost:9200/<index>/_settings?pretty' -H 'Content-Type: application/json' -d' {
@@ -179,9 +242,13 @@ vm.max_map_count=262144
 sysctl -p
 sysctl vm.max_map_count
 
-#sysctl -w net.ipv4.tcp_retries2=5
+# sysctl -w net.ipv4.tcp_retries2=5
 /etc/sysctl.conf
 net.ipv4.tcp_retries2 5
+
+# lock memory
+bootstrap.memory_lock: true
+# _nodes?filter_path=**.mlockall
 
 # config es with docker
 /usr/share/elasticsearch/config/
