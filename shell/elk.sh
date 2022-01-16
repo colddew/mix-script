@@ -92,14 +92,14 @@ curl -X PUT 'localhost:9200/accounts' -d '
 
 # index curd
 # put is global update, post is partial update
-<index>/<type>/<id> PUT
+<index>/<type>/<document-id> PUT
 <index>/<type> POST
-<index>/<type>/<id>/_update POST
-<index>/<type>/<id> GET
-<index>/<type>/<id> DELETE
+# <index>/<type>/<document-id>/_update POST
+<index>/<type>/<document-id> GET
+<index>/<type>/<document-id> DELETE
 <index> DELETE
 <index>/<type>/_search
-<index>/<type>/<id>/_source
+<index>/<type>/<document-id>/_source
 <index>/_search?pretty&q=<field>:<field-value>
 <index>/<type>/_search?pretty
 # curl -XPOST -H "Content-Type: application/json" http://39.106.229.248:9200/blog/article/_search?pretty -d '{ "query" : {"term" : {"title" : "enhance" }}, "from": 1, "size": 5}'
@@ -109,7 +109,7 @@ curl -XHEAD 'localhost:9200/<index>/user/1?pretty'
 curl -XGET 'localhost:9200/<index>/user/1?pretty'
 curl -XGET 'localhost:9200/<index>/user/_search?q=last_name:ya&pretty'
 
-curl -XPUT  'localhost:9200/<index>/user/1?pretty' -H 'Content-Type: application/json' -d' {
+curl -XPUT 'localhost:9200/<index>/user/1?pretty' -H 'Content-Type: application/json' -d' {
 	"first_name": "zhang",
 	"last_name" : "ya",
 	"age" : 18,
@@ -124,20 +124,57 @@ curl -XPOST 'localhost:9200/<index>/user/1?pretty' -H 'Content-Type: application
 curl -XDELETE 'localhost:9200/<index>/user/1?pretty'
 
 # or
-curl 'localhost:9200/accounts/person/_search' -d '{
+curl 'localhost:9200/accounts/article/_search' -d '{
   "query" : { "match" : { "desc" : "软件 系统" }}
 }'
 
 # and
-curl 'localhost:9200/accounts/person/_search' -d '{
+curl 'localhost:9200/accounts/article/_search' -d '{
   "query": {
     "bool": {
+      # "should"
       "must": [
         { "match": { "desc": "软件" } },
         { "match": { "desc": "系统" } }
       ]
     }
-  }
+  },
+  "filter": [
+    {
+      "term": {
+        "word_count": 1000
+      }
+    }  
+  ],
+  "sort": [
+      {"publishDate": {"order": "desc"}}
+  ]
+}'
+
+# exact match
+curl 'localhost:9200/accounts/article/_search' -d '{
+  "query" : { "match_phrase" : { "desc" : "软件 系统" }}
+}'
+
+# multi field
+curl 'localhost:9200/accounts/article/_search' -d '{
+  "query" : { "multi_match" : { "query" : "软件" }, fields: ["author", "title"]}
+}'
+
+curl 'localhost:9200/accounts/article/_search' -d '{
+  "query" : { "query_string": { "query" : "软件 OR 系统" }, fields: ["author", "title"]}
+}'
+
+curl 'localhost:9200/accounts/article/_search' -d '{
+    "query": {
+        "constant_socre": {
+            "filter": {
+                "match": {
+                    "title": "Elasticsearch"
+                }
+            }
+        }
+    }
 }'
 
 
@@ -146,6 +183,38 @@ curl -XPUT 'localhost:9200/<index>/_settings?pretty' -H 'Content-Type: applicati
 "settings" : { 
   "number_of_replicas" : 1
  } 
+}'
+
+curl -XPUT 'localhost:9200/people -d '{
+    "settings": {
+        "number_of_shards": 3,
+        "number_of_replicas": 1
+    },
+    "mappings": {
+        "man": {
+            "properties": {
+                "name": {
+                    "type": "text"
+                },
+                "country": {
+                    "type": "keyword"
+                },
+                "age": {
+                    "type": "integer"
+                },
+                "date": {
+                    "type": "date",
+                    "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+                }
+            }
+        }
+    }
+}'
+
+curl -XPOST  'localhost:9200/people/man/1/_update -d '{
+    "doc": {
+        "name": "hello world"
+    }
 }'
 
 # install logstash
