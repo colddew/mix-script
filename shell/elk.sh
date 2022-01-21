@@ -47,6 +47,7 @@ curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'
 ?pretty
 _cluster/health
 _count
+# filebeat.*/_count
 <index-name>/_search?pretty
 _search?q=last_name:Smith
 _cluster/stats
@@ -58,11 +59,21 @@ _cat/indices?v
 _cat/health
 _cat/heath?help
 _cat/health?h=cluster,pri,relo&v
+_cat/plugins
+_close
+# _settings
+_open
 
 # analyzer
 # ik
 # pinyin
 elasticsearch-plugin install <analyzer-url>
+
+POST <index>/_analyze      
+{
+    "analyzer": "customized_analyzer",   
+    "text": "The quick & brown fox"
+}
 
 # set chinese analyzer for text and search keywords
 curl -X PUT 'localhost:9200/accounts' -d '
@@ -109,7 +120,7 @@ curl -XHEAD 'localhost:9200/<index>/user/1?pretty'
 curl -XGET 'localhost:9200/<index>/user/1?pretty'
 curl -XGET 'localhost:9200/<index>/user/_search?q=last_name:ya&pretty'
 
-curl -XPUT 'localhost:9200/<index>/user/1?pretty' -H 'Content-Type: application/json' -d' {
+curl -XPUT 'localhost:9200/<index>/user/1?pretty' -H 'Content-Type: application/json' -d '{
 	"first_name": "zhang",
 	"last_name" : "ya",
 	"age" : 18,
@@ -216,6 +227,46 @@ curl -XPOST  'localhost:9200/people/man/1/_update -d '{
         "name": "hello world"
     }
 }'
+
+curl 'localhost:9200/article/_search' -d '{
+  "query": {
+    "bool": {
+      "should": [
+        {
+          "match": {
+            "title": {
+              "query": "quick brown fox",
+              "boost": 2 
+            }
+          }
+        },
+        {
+          "match": { 
+            "content": "quick brown fox",
+            "boost": 1 # default value
+          }
+        }
+      ]
+    }
+  }
+}'
+
+{
+    "multi_match": {
+        "query":  "Quick brown fox",
+        "fields": [ "*_title", "chapter_title^2" ] 
+    }
+}
+
+{
+   "multi_match" : {
+      "query" : "brown fox",
+      "type" : "best_fields",
+      "tie_breaker" : 0.3,
+      "fields" : [ "title^1.5", "body" ],
+      "minimun_should_match" : "30%"
+   }
+}
 
 # install logstash
 # event processing pipeline has three stages: inputs → filters → outputs

@@ -20,6 +20,7 @@ docker ps -n 3
 docker images
 docke image rm nginx
 # docker rmi nginx
+docker volume ls
 
 # remove all/invalid image
 docker rmi `docker images -a -q`
