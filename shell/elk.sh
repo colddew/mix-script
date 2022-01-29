@@ -268,6 +268,17 @@ curl 'localhost:9200/article/_search' -d '{
    }
 }
 
+#  data copy
+POST _reindex
+{
+  "source": {
+    "index": "source-index"
+  },
+  "dest": {
+    "index": "dest-index"
+  }
+}
+
 # install logstash
 # event processing pipeline has three stages: inputs → filters → outputs
 # inputs generate events, filters modify them, and outputs ship them elsewhere

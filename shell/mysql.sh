@@ -78,6 +78,7 @@ set @@global.sql_mode = 'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_
 # log-bin=mysql-bin
 # binlog-format=ROW
 # server_id=1
+# binlog-do-db=<db-name>
 mysqlbinlog --no-defaults mysql-bin.000001
 show variables like 'binlog_format';
 show variables like 'log_bin';
@@ -110,3 +111,64 @@ mysql> source <import.sql>
 mysql> select now() into outfile <import.sql>
 mysql -u root -p -e "source <import.sql>"
 mysql [-h <host>] -u root -p <databases> < <import.sql> > import.log
+
+# canal deployer
+# my.cnf
+[mysqld]
+log-bin=mysql-bin
+binlog-format=ROW
+server_id=1
+
+show variables like 'binlog_format';
+show variables like 'log_bin';
+
+CREATE USER canal IDENTIFIED BY 'canal';
+GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'canal'@'%';
+-- GRANT ALL PRIVILEGES ON *.* TO 'canal'@'%';
+FLUSH PRIVILEGES;
+# select * from mysql.user;
+# show grants for canal;
+# show privileges;
+CREATE USER canal_admin IDENTIFIED BY 'canal_admin';
+GRANT ALL PRIVILEGES ON canal_manager.* TO 'canal_admin'@'%';
+FLUSH PRIVILEGES;
+
+mkdir canal-deployer-1.1.5
+tar -zxvf canal.deployer-1.1.5.tar.gz -C canal-deployer-1.1.5
+<canal-deployer-path>/bin/startup.sh
+<canal-deployer-path>/bin/startup.sh local
+<canal-deployer-path>/bin/startup.sh debug 9099
+<canal-deployer-path>/bin/stop.sh
+tail -f <canal-deployer-path>/logs/canal/canal.log
+tail -f <canal-deployer-path>/logs/example/example.log
+
+# canal admin
+# con/application.yml
+# spring.datasource.address
+# spring.datasource.username
+# spring.datasource.password
+<canal-admin-path>/bin/startup.sh
+<canal-admin-path>/bin/stop.sh
+# http://127.0.0.1:8089
+
+# canal adapter
+# download source and recompile client-adapter.es7x-1.1.5-jar-with-dependencies.jar
+# conf/application.yml
+# server.port
+# canal.conf.consumerProperties.canal.tcp.server.host
+# canal.conf.srcDataSources.defaultDS.url
+# canal.conf.srcDataSources.defaultDS.username
+# canal.conf.srcDataSources.defaultDS.password
+# canal.conf.canalAdapters.groups.outerAdapters.hosts
+# canal.conf.canalAdapters.groups.outerAdapters.properties.cluster.name
+<canal-adapter-path>/bin/startup.sh
+<canal-adapter-path>/bin/stop.sh
+# curl http://127.0.0.1:8081/destinations
+# curl -X PUT http://127.0.0.1:8081/syncSwitch/example/off
+# curl http://127.0.0.1:8081/syncSwitch/example
+# import partial data, etlCondition in yml
+# curl -X POST http://127.0.0.1:8081/etl/hbase/mytest_person2.yml -d "params=2018-10-21 00:00:00"
+# import all data
+# curl -X POST http://127.0.0.1:8081/etl/hbase/mytest_person2.yml
+# curl -X POST http://ip:8081/etl/es7/example.yml
+# curl http://127.0.0.1:8081/count/hbase/mytest_person2.yml
