@@ -172,3 +172,14 @@ tail -f <canal-deployer-path>/logs/example/example.log
 # curl -X POST http://127.0.0.1:8081/etl/hbase/mytest_person2.yml
 # curl -X POST http://ip:8081/etl/es7/example.yml
 # curl http://127.0.0.1:8081/count/hbase/mytest_person2.yml
+
+# canal HA
+# cluster canal.properties
+# canal.zkServers=172.17.248.236:2181,172.17.248.236:2182,172.17.248.236:2183
+# canal.instance.global.spring.xml = classpath:spring/default-instance.xml
+# <zk-home>/bin/zkCli.sh -server 127.0.0.1:2181
+ls /otter/canal/cluster
+get /otter/canal/destinations/example/running
+ls /otter/canal/destinations/example/cluster
+get /otter/canal/destinations/example/1001/running
+get /otter/canal/destinations/example/1001/cursor

@@ -203,3 +203,10 @@ pip uninstall docker-compose
 docker-compose down
 docker-compose up
 docker-compose restart
+docker-compose up --scale <service>=3 -d
+
+# diagnose log
+kubectl describe <event>
+journalctl -u docker -f
+journalctl -u kubelet -f
+docker logs <container-id>

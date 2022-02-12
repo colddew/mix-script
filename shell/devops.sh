@@ -314,3 +314,23 @@ tcpdump -i eth0 -c 100 -w /tmp/capture.cap
 # nohup tcpdump -i eth0 -s 256 -C 1024 host 172.30.232.59 and tcp -n -X -w redisTcpDump.cap &
 # most TIME_WAIT ip
 netstat -ptan | grep TIME_WAIT | awk '{print $5}' | awk -F : '{print $1}' | sort | uniq -c | sort -r
+
+# diagnose redis exception
+jmap -dump:live,format=b,file=heap.bin <pid>
+jmap -dump:format=b,file=heap.bin <pid>
+tar -zcvf heap.bin.tar.gz heap.bin
+netstat -alntp | grep 6379 | awk '{print $NF}'| sort | uniq -c
+ss | grep 6379 | wc -l
+jps -lvVm
+# netstat -an | awk '/^tcp/ {++y[$NF]} END {for(w in y) print w, y[w]}'
+# nohup tcpdump -i eth0 -s 256 -C 1024 host xx.xx.xx.xx and tcp -n -X  -w redisTcpDump.cap &
+# zgrep '/article' xxx.log | awk '{print $(NF-3)}'  | sort | uniq -c | sort -nr | head -n 35
+# arthas
+trace com.fh.controller.base.BaseController checkLogin
+watch redis.clients.jedis.JedisPool getNumActive
+watch redis.clients.jedis.JedisPool getNumWaiters
+watch redis.clients.jedis.JedisPool getNumIdle
+vmtool --action getInstances --className redis.clients.jedis.JedisPool --express 'instances[0].getNumActive()'
+vmtool --action getInstances --className redis.clients.jedis.JedisPool --express 'instances[0].getNumWaiters()'
+vmtool --action getInstances --className redis.clients.jedis.JedisPool --express 'instances[0].getNumIdle()'
+java -jar arthas-boot.jar 30210 -c "vmtool --action getInstances --className redis.clients.jedis.JedisPool --express 'instances[0].getNumActive()'"

@@ -26,6 +26,8 @@ kubectl describe replicasets
 kubectl expose deployment hello-world --type=NodePort --name=example-service
 # kubectl expose deployment hello-world --type=LoadBalancer --name=example-service
 kubectl scale deployment hello-world --replicas=3
+# kubectl autoscale deployment nginx-deploy --cpu-percent=50 --min=1 --max=10
+# kubectl get hpa
 kubectl get service example-service
 kubectl describe services example-service
 kubectl get pods --selector="run=load-balancer-example" --output=wide
@@ -66,3 +68,6 @@ kubectl rollout undo deployment nginx-deployment
 kubectl describe ingress <ingress-name>
 kubectl edit ingress <ingress-name>
 # kubectl replace -f <modified-ingress-yaml>
+
+# cluster timezone
+kubectl get configmap -n kube-system ack-cluster-profile -o yaml | grep timezone

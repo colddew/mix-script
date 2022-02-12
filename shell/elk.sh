@@ -60,9 +60,16 @@ _cat/health
 _cat/heath?help
 _cat/health?h=cluster,pri,relo&v
 _cat/plugins
+_cat/shards
+_cat/recovery
 _close
 # _settings
 _open
+
+<index>/_doc/<id>/_explain
+<index>/_doc/<id>/_termvectors
+<index>/_close
+<index>/_open
 
 # analyzer
 # ik
@@ -74,6 +81,8 @@ POST <index>/_analyze
     "analyzer": "customized_analyzer",   
     "text": "The quick & brown fox"
 }
+
+GET <index>/_analyze?text="<document>"
 
 # set chinese analyzer for text and search keywords
 curl -X PUT 'localhost:9200/accounts' -d '
@@ -113,11 +122,15 @@ curl -X PUT 'localhost:9200/accounts' -d '
 <index>/<type>/<document-id>/_source
 <index>/_search?pretty&q=<field>:<field-value>
 <index>/<type>/_search?pretty
+delete_by_query
+update_by_query
+
 # curl -XPOST -H "Content-Type: application/json" http://39.106.229.248:9200/blog/article/_search?pretty -d '{ "query" : {"term" : {"title" : "enhance" }}, "from": 1, "size": 5}'
 # curl -XPOST -H "Content-Type: application/json" http://39.106.229.248:9200/blog/article/_search?pretty -d '{ "query" : {"terms" : {"_id" : [ "3", "5", "7" ] }}}'
 
 curl -XHEAD 'localhost:9200/<index>/user/1?pretty'
 curl -XGET 'localhost:9200/<index>/user/1?pretty'
+# curl -XGET 'localhost:9200/<index>/user/1?pretty' -u name:password
 curl -XGET 'localhost:9200/<index>/user/_search?q=last_name:ya&pretty'
 
 curl -XPUT 'localhost:9200/<index>/user/1?pretty' -H 'Content-Type: application/json' -d '{
@@ -159,7 +172,8 @@ curl 'localhost:9200/accounts/article/_search' -d '{
   ],
   "sort": [
       {"publishDate": {"order": "desc"}}
-  ]
+  ],
+  "explain": true
 }'
 
 # exact match
@@ -268,14 +282,15 @@ curl 'localhost:9200/article/_search' -d '{
    }
 }
 
-#  data copy
+# index copy
+# close refresh and set replica:0 of destination when index copy
 POST _reindex
 {
   "source": {
     "index": "source-index"
   },
   "dest": {
-    "index": "dest-index"
+    "index": "destination-index"
   }
 }
 
@@ -320,6 +335,9 @@ nohup /usr/local/filebeat/filebeat -c filebeat.yml 2>&1 &
 # elasticsearch.hosts=
 nohup /<kibana-path>/kibana/bin/kibana &
 http://localhost:5601
+# Dev Tools
+# DSL format
+command + i
 
 # intall elk with docker
 # es single
@@ -338,6 +356,7 @@ docker run --name kib01-test --net elastic -p 127.0.0.1:5601:5601 -e "ELASTICSEA
 # docker rm kib01-test
 
 # es cluster
+# snapshot & restore
 # docker-compose.yml
 docker-compose up
 docker-compose up -d
