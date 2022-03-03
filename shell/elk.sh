@@ -75,6 +75,7 @@ _open
 # ik
 # pinyin
 elasticsearch-plugin install <analyzer-url>
+elasticsearch-plugin list
 
 POST <index>/_analyze      
 {

@@ -20,6 +20,7 @@ services:
         hard: -1
     volumes:
       - data01:/usr/share/elasticsearch/data
+      # /var/lib/docker/volumes
     ports:
       - 9200:9200
     networks:
