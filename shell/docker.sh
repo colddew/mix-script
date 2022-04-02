@@ -43,6 +43,7 @@ docker inspect daemon_ubuntu
 # query container ip
 docker inspect --format='{{.NetworkSettings.IPAddress}}' <container-id>
 docker cp <container-name>:<container-path> .
+docker cp . <container-name>:<container-path>
 
 # docker exec -it daemon_ubuntu /bin/bash
 # exit 
@@ -200,7 +201,7 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 docker-compose --version
 # sudo rm /usr/local/bin/docker-compose
 pip uninstall docker-compose
-docker-compose down
+docker-compose down [-v]
 docker-compose up
 docker-compose restart
 docker-compose up --scale <service>=3 -d

@@ -135,6 +135,7 @@ jstack -F <pid>
 jcmd
 jinfo -flags <pid>
 jinfo -sysprops <pid>
+ps -eo pid,lstart,etime,cmd | grep -v grep | grep <process-name>
 
 # gc
 # http://gceasy.io/
